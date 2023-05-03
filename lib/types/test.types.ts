@@ -1,16 +1,18 @@
+export type Count = {
+  passed: number;
+  failed: number;
+};
+
 export type Test = {
   passed: boolean;
   message: string;
-  count: {
-    passed: number;
-    failed: number;
-  };
+  count: Count;
   time: number;
 };
 
 export type TestHandler = {
   finish: () => void;
-  getCount: () => Test['count'];
+  getCount: () => Count;
   getTime: () => number;
 };
 
