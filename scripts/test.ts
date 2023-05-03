@@ -2,7 +2,7 @@ import { readDir } from '../lib/deps.ts';
 
 const run = async (path: string) => {
   const module = await import(path);
-  module.default();
+  module.default?.();
 };
 
 const isTestFile = (path: string) => path.endsWith('.test.ts');
