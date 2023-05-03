@@ -5,6 +5,7 @@ import type {
 } from '../types/test.types.ts';
 import type { Assert, AssertResult } from '../types/assert.types.ts';
 import print from '../utils/print.ts';
+import { PickRequired } from '../types/utils.types.ts';
 
 export type Expectation = Test;
 export type ExpectationHandler = TestHandler;
@@ -41,7 +42,10 @@ export const createExpectationHandler: ExpectationHandlerCreator = (
 export const handleExpectation = <Input>(
   expectation: Input,
   assert: Assert<Input>,
-  createExpectationHandler: ExpectationHandlerCreator
+  createExpectationHandler: (
+    data: AssertResult,
+    prefix?: string
+  ) => PickRequired<ExpectationHandler, 'finish'>
 ) => {
   const handler = createExpectationHandler(assert(expectation));
   handler.finish();
