@@ -86,9 +86,9 @@ export const handleModule = <Input>(
 
   const wrapModule: typeof describe<Input> = (
     description: string,
-    runModule: SuiteRunner<Input>
+    runSuite: SuiteRunner<Input>
   ) => {
-    handler.addSuite(description, runModule);
+    handler.addSuite(description, runSuite);
   };
 
   // @ts-ignore: I don't know what is going on
