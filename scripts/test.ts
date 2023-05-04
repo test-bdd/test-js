@@ -32,7 +32,7 @@ const getPaths = async (
   return paths;
 };
 
-const path = Deno.args[0];
+const path = Deno.args[0] || 'lib';
 const root = new URL('../', import.meta.url).pathname;
 const paths = await getPaths(`${root}${path}`, []);
 for (const path of paths) run(path);
