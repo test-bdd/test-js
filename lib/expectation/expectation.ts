@@ -24,7 +24,7 @@ export const createExpectationHandler: ExpectationHandlerCreator = (
     message,
     count: {
       passed: passed ? 1 : 0,
-      failed: passed ? 0 : 0
+      failed: passed ? 0 : 1
     },
     time: 0
   };
