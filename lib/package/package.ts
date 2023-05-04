@@ -106,8 +106,8 @@ export const handlePackage = <Input>(
 
 export const pack = <Input>(
   description: string,
-  runModule: ModuleRunner<Input>
+  runPackage: PackageRunner<Input>
 ) => {
-  const wrapHandler = () => createModuleHandler<Input>(description, '');
-  handleModule<Input>(runModule, wrapHandler);
+  const wrapHandler = () => createPackageHandler<Input>(description, '');
+  handlePackage<Input>(runPackage, wrapHandler);
 };
