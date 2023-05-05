@@ -8,21 +8,21 @@ import { getTestTime } from '../utils/time.ts';
 import finishTest from '../utils/finish.ts';
 import { PickRequired } from '../types/utils.types.ts';
 
-export type Suite<Input> = Test & {
-  steps: Array<StepHandler<Input>>;
+export type Suite = Test & {
+  steps: Array<StepHandler>;
 };
 
-export type SuiteHandler<Input> = TestHandler & {
-  addStep: (description: string, stepRunner: StepRunner<Input>) => void;
+export type SuiteHandler = TestHandler & {
+  addStep: (description: string, stepRunner: StepRunner) => void;
 };
 
-export type SuiteRunner<Input> = (test: typeof it) => void | Promise<void>;
+export type SuiteRunner = (test: typeof it) => void | Promise<void>;
 
-export const createSuiteHandler = <Input>(
+export const createSuiteHandler = (
   message: string,
   prefix: string
-): SuiteHandler<Input> => {
-  const suite: Suite<Input> = {
+): SuiteHandler => {
+  const suite: Suite = {
     passed: false,
     message,
     count: {
@@ -44,9 +44,9 @@ export const createSuiteHandler = <Input>(
   };
 
   // TODO: Avoid race conditions in case of concurrency
-  const addStep: SuiteHandler<Input>['addStep'] = (description, stepRunner) => {
+  const addStep: SuiteHandler['addStep'] = (description, stepRunner) => {
     handleStep(stepRunner, () => {
-      const stepHandler = createStepHandler<Input>(
+      const stepHandler = createStepHandler(
         description,
         `${prefix}${PRINT_PREFIX}`
       );
@@ -73,16 +73,13 @@ export const createSuiteHandler = <Input>(
   return { getCount, getTime, addStep, finish };
 };
 
-export const handleSuite = <Input>(
-  runSuite: SuiteRunner<Input>,
-  createHandler: () => PickRequired<SuiteHandler<Input>, 'finish' | 'addStep'>
+export const handleSuite = (
+  runSuite: SuiteRunner,
+  createHandler: () => PickRequired<SuiteHandler, 'finish' | 'addStep'>
 ) => {
   const handler = createHandler();
 
-  const wrapStep: typeof it<Input> = (
-    description: string,
-    runStep: StepRunner<Input>
-  ) => {
+  const wrapStep: typeof it = (description: string, runStep: StepRunner) => {
     handler.addStep(description, runStep);
   };
 
@@ -96,10 +93,7 @@ export const handleSuite = <Input>(
   handler.finish();
 };
 
-export const describe = <Input>(
-  description: string,
-  runSuite: SuiteRunner<Input>
-) => {
-  const wrapHandler = () => createSuiteHandler<Input>(description, '');
-  handleSuite<Input>(runSuite, wrapHandler);
+export const describe = (description: string, runSuite: SuiteRunner) => {
+  const wrapHandler = () => createSuiteHandler(description, '');
+  handleSuite(runSuite, wrapHandler);
 };

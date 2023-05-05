@@ -15,16 +15,16 @@ export type Step = Test & {
   expectations: Array<ExpectationHandler>;
 };
 
-export type StepHandler<Input> = TestHandler & {
-  addExpectation: Expect<Input>;
+export type StepHandler = TestHandler & {
+  addExpectation: Expect;
 };
 
-export type StepRunner<Input> = (expect: Expect<Input>) => void | Promise<void>;
+export type StepRunner = (expect: Expect) => void | Promise<void>;
 
-export const createStepHandler = <Input>(
+export const createStepHandler = (
   message: string,
   prefix: string
-): StepHandler<Input> => {
+): StepHandler => {
   const step: Step = {
     passed: false,
     message,
@@ -47,7 +47,7 @@ export const createStepHandler = <Input>(
   };
 
   // TODO: Avoid race conditions in case of concurrency
-  const addExpectation: StepHandler<Input>['addExpectation'] = (
+  const addExpectation: StepHandler['addExpectation'] = (
     expectation,
     assert
   ) => {
@@ -78,16 +78,13 @@ export const createStepHandler = <Input>(
   return { getCount, getTime, addExpectation, finish };
 };
 
-export const handleStep = <Input>(
-  test: StepRunner<Input>,
-  createHandler: () => PickRequired<
-    StepHandler<Input>,
-    'finish' | 'addExpectation'
-  >
+export const handleStep = (
+  test: StepRunner,
+  createHandler: () => PickRequired<StepHandler, 'finish' | 'addExpectation'>
 ) => {
   const handler = createHandler();
 
-  const wrapExpectation: Expect<Input> = (expectation, confirm) => {
+  const wrapExpectation: Expect = (expectation, confirm) => {
     handler.addExpectation(expectation, confirm);
   };
 
@@ -100,7 +97,7 @@ export const handleStep = <Input>(
   handler.finish();
 };
 
-export const it = <Input>(description: string, test: StepRunner<Input>) => {
-  const wrapHandler = () => createStepHandler<Input>(description, '');
-  handleStep<Input>(test, wrapHandler);
+export const it = (description: string, test: StepRunner) => {
+  const wrapHandler = () => createStepHandler(description, '');
+  handleStep(test, wrapHandler);
 };

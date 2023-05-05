@@ -3,4 +3,4 @@ export type AssertResult = {
   message?: string;
 };
 
-export type Assert<Input> = (input: Input) => AssertResult;
+export type Assert = (input: unknown) => AssertResult;

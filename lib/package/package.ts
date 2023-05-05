@@ -8,23 +8,21 @@ import { getTestTime } from '../utils/time.ts';
 import finishTest from '../utils/finish.ts';
 import { PickRequired } from '../types/utils.types.ts';
 
-export type Package<Input> = Test & {
-  modules: Array<ModuleHandler<Input>>;
+export type Package = Test & {
+  modules: Array<ModuleHandler>;
 };
 
-export type PackageHandler<Input> = TestHandler & {
-  addModule: (description: string, moduleRunner: ModuleRunner<Input>) => void;
+export type PackageHandler = TestHandler & {
+  addModule: (description: string, moduleRunner: ModuleRunner) => void;
 };
 
-export type PackageRunner<Input> = (
-  test: typeof module
-) => void | Promise<void>;
+export type PackageRunner = (test: typeof module) => void | Promise<void>;
 
-export const createPackageHandler = <Input>(
+export const createPackageHandler = (
   message: string,
   prefix: string
-): PackageHandler<Input> => {
-  const pack: Package<Input> = {
+): PackageHandler => {
+  const pack: Package = {
     passed: false,
     message,
     count: {
@@ -46,12 +44,12 @@ export const createPackageHandler = <Input>(
   };
 
   // TODO: Avoid race conditions in case of concurrency
-  const addModule: PackageHandler<Input>['addModule'] = (
+  const addModule: PackageHandler['addModule'] = (
     description,
     moduleRunner
   ) => {
     handleModule(moduleRunner, () => {
-      const moduleHandler = createModuleHandler<Input>(
+      const moduleHandler = createModuleHandler(
         description,
         `${prefix}${PRINT_PREFIX}`
       );
@@ -78,18 +76,15 @@ export const createPackageHandler = <Input>(
   return { getCount, getTime, addModule, finish };
 };
 
-export const handlePackage = <Input>(
-  runPackage: PackageRunner<Input>,
-  createHandler: () => PickRequired<
-    PackageHandler<Input>,
-    'finish' | 'addModule'
-  >
+export const handlePackage = (
+  runPackage: PackageRunner,
+  createHandler: () => PickRequired<PackageHandler, 'finish' | 'addModule'>
 ) => {
   const handler = createHandler();
 
-  const wrapPackage: typeof module<Input> = (
+  const wrapPackage: typeof module = (
     description: string,
-    runModule: ModuleRunner<Input>
+    runModule: ModuleRunner
   ) => {
     handler.addModule(description, runModule);
   };
@@ -104,10 +99,7 @@ export const handlePackage = <Input>(
   handler.finish();
 };
 
-export const pack = <Input>(
-  description: string,
-  runPackage: PackageRunner<Input>
-) => {
-  const wrapHandler = () => createPackageHandler<Input>(description, '');
-  handlePackage<Input>(runPackage, wrapHandler);
+export const pack = (description: string, runPackage: PackageRunner) => {
+  const wrapHandler = () => createPackageHandler(description, '');
+  handlePackage(runPackage, wrapHandler);
 };

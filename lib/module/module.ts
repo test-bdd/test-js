@@ -8,23 +8,21 @@ import { getTestTime } from '../utils/time.ts';
 import finishTest from '../utils/finish.ts';
 import { PickRequired } from '../types/utils.types.ts';
 
-export type Module<Input> = Test & {
-  suites: Array<SuiteHandler<Input>>;
+export type Module = Test & {
+  suites: Array<SuiteHandler>;
 };
 
-export type ModuleHandler<Input> = TestHandler & {
-  addSuite: (description: string, suiteRunner: SuiteRunner<Input>) => void;
+export type ModuleHandler = TestHandler & {
+  addSuite: (description: string, suiteRunner: SuiteRunner) => void;
 };
 
-export type ModuleRunner<Input> = (
-  test: typeof describe
-) => void | Promise<void>;
+export type ModuleRunner = (test: typeof describe) => void | Promise<void>;
 
-export const createModuleHandler = <Input>(
+export const createModuleHandler = (
   message: string,
   prefix: string
-): ModuleHandler<Input> => {
-  const module: Module<Input> = {
+): ModuleHandler => {
+  const module: Module = {
     passed: false,
     message,
     count: {
@@ -46,12 +44,9 @@ export const createModuleHandler = <Input>(
   };
 
   // TODO: Avoid race conditions in case of concurrency
-  const addSuite: ModuleHandler<Input>['addSuite'] = (
-    description,
-    suiteRunner
-  ) => {
+  const addSuite: ModuleHandler['addSuite'] = (description, suiteRunner) => {
     handleSuite(suiteRunner, () => {
-      const suiteHandler = createSuiteHandler<Input>(
+      const suiteHandler = createSuiteHandler(
         description,
         `${prefix}${PRINT_PREFIX}`
       );
@@ -78,15 +73,15 @@ export const createModuleHandler = <Input>(
   return { getCount, getTime, addSuite, finish };
 };
 
-export const handleModule = <Input>(
-  runModule: ModuleRunner<Input>,
-  createHandler: () => PickRequired<ModuleHandler<Input>, 'finish' | 'addSuite'>
+export const handleModule = (
+  runModule: ModuleRunner,
+  createHandler: () => PickRequired<ModuleHandler, 'finish' | 'addSuite'>
 ) => {
   const handler = createHandler();
 
-  const wrapModule: typeof describe<Input> = (
+  const wrapModule: typeof describe = (
     description: string,
-    runSuite: SuiteRunner<Input>
+    runSuite: SuiteRunner
   ) => {
     handler.addSuite(description, runSuite);
   };
@@ -101,10 +96,7 @@ export const handleModule = <Input>(
   handler.finish();
 };
 
-export const module = <Input>(
-  description: string,
-  runModule: ModuleRunner<Input>
-) => {
-  const wrapHandler = () => createModuleHandler<Input>(description, '');
-  handleModule<Input>(runModule, wrapHandler);
+export const module = (description: string, runModule: ModuleRunner) => {
+  const wrapHandler = () => createModuleHandler(description, '');
+  handleModule(runModule, wrapHandler);
 };

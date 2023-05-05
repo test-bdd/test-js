@@ -9,7 +9,7 @@ import { PickRequired } from '../types/utils.types.ts';
 
 export type Expectation = Test;
 export type ExpectationHandler = TestHandler;
-export type Expect<Input> = (input: Input, assert: Assert<Input>) => void;
+export type Expect = (input: unknown, assert: Assert) => void;
 export type ExpectationHandlerCreator = TestHandlerCreator<
   AssertResult,
   ExpectationHandler
@@ -39,9 +39,9 @@ export const createExpectationHandler: ExpectationHandlerCreator = (
   return { finish, getCount, getTime };
 };
 
-export const handleExpectation = <Input>(
-  expectation: Input,
-  assert: Assert<Input>,
+export const handleExpectation = (
+  expectation: unknown,
+  assert: Assert,
   createExpectationHandler: (
     data: AssertResult,
     prefix?: string
@@ -51,6 +51,6 @@ export const handleExpectation = <Input>(
   handler.finish();
 };
 
-export const expect = <Input>(expectation: Input, assert: Assert<Input>) => {
+export const expect = (expectation: unknown, assert: Assert) => {
   handleExpectation(expectation, assert, createExpectationHandler);
 };
