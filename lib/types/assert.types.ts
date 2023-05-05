@@ -4,3 +4,5 @@ export type ConfirmResult = {
 };
 
 export type Confirm = (input: unknown) => ConfirmResult;
+
+export type Assert = (target: unknown) => Confirm;

@@ -2,7 +2,7 @@ import { format } from '../deps.ts';
 import testAndPrint from '../utils/test-and-print.ts';
 import { pack } from './package.ts';
 
-const testStep = () => {
+const testPackage = () => {
   const failMessage = "Boolean values didn't match";
   console.log(format.bold('Package') + '\n');
   const descriptionPackage = 'Types';
@@ -45,4 +45,4 @@ const testStep = () => {
   });
 };
 
-export default testStep;
+export default testPackage;
