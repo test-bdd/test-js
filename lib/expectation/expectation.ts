@@ -3,15 +3,15 @@ import type {
   Test,
   TestHandler
 } from '../types/test.types.ts';
-import type { Assert, AssertResult } from '../types/assert.types.ts';
+import type { Confirm, ConfirmResult } from '../types/assert.types.ts';
 import print from '../utils/print.ts';
 import { PickRequired } from '../types/utils.types.ts';
 
 export type Expectation = Test;
 export type ExpectationHandler = TestHandler;
-export type Expect = (input: unknown, assert: Assert) => void;
+export type Expect = (input: unknown, assert: Confirm) => void;
 export type ExpectationHandlerCreator = TestHandlerCreator<
-  AssertResult,
+  ConfirmResult,
   ExpectationHandler
 >;
 
@@ -41,9 +41,9 @@ export const createExpectationHandler: ExpectationHandlerCreator = (
 
 export const handleExpectation = (
   expectation: unknown,
-  assert: Assert,
+  assert: Confirm,
   createExpectationHandler: (
-    data: AssertResult,
+    data: ConfirmResult,
     prefix?: string
   ) => PickRequired<ExpectationHandler, 'finish'>
 ) => {
@@ -51,6 +51,6 @@ export const handleExpectation = (
   handler.finish();
 };
 
-export const expect = (expectation: unknown, assert: Assert) => {
+export const expect = (expectation: unknown, assert: Confirm) => {
   handleExpectation(expectation, assert, createExpectationHandler);
 };

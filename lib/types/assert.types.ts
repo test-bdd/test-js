@@ -1,6 +1,6 @@
-export type AssertResult = {
+export type ConfirmResult = {
   passed: boolean;
   message?: string;
 };
 
-export type Assert = (input: unknown) => AssertResult;
+export type Confirm = (input: unknown) => ConfirmResult;
