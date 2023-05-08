@@ -5,6 +5,6 @@ export type ConfirmResult = {
 
 export type Confirm = (input: unknown) => ConfirmResult;
 
-export type Assert = (target: unknown) => Confirm;
+export type Assert = (...target: Array<unknown>) => Confirm;
 
 export type AssertVoid = () => Confirm;
