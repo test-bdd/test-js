@@ -64,6 +64,12 @@ export const handleExpectation = (
   handler.finish();
 };
 
+/**
+ * Runs an assertion.
+ * @param expectation - The known value to assert.
+ * @param assert - The function used for assertion.
+ * @returns A promise if `assert` is asynchronous, `void` otherwise.
+ */
 export const expect = (
   expectation: unknown,
   assert: Confirm | ConfirmAsync
