@@ -93,6 +93,12 @@ export const handleSuite = (
   handler.finish();
 };
 
+/**
+ * Runs a test suite; a collection of steps.
+ * @param description - A description of the test suite.
+ * @param runSuite - A callback that runs steps.
+ * @returns A promise if `runSuite` is asynchronous, `void` otherwise.
+ */
 export const describe = (description: string, runSuite: SuiteRunner) => {
   const wrapHandler = () => createSuiteHandler(description, '');
   handleSuite(runSuite, wrapHandler);
