@@ -96,6 +96,12 @@ export const handleModule = (
   handler.finish();
 };
 
+/**
+ * Runs a module; a collection of test suites.
+ * @param description - A description of the suite.
+ * @param runModule - A callback that runs suites.
+ * @returns A promise if `runModule` is asynchronous, `void` otherwise.
+ */
 export const module = (description: string, runModule: ModuleRunner) => {
   const wrapHandler = () => createModuleHandler(description, '');
   handleModule(runModule, wrapHandler);
