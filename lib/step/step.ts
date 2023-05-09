@@ -97,6 +97,12 @@ export const handleStep = (
   handler.finish();
 };
 
+/**
+ * Runs a step; a collection of assertions.
+ * @param description - Description of the step.
+ * @param test - The callback that runs assertions.
+ * @returns A promise if `test` is asynchronous, `void` otherwise.
+ */
 export const it = (description: string, test: StepRunner) => {
   const wrapHandler = () => createStepHandler(description, '');
   handleStep(test, wrapHandler);
