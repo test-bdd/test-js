@@ -1,6 +1,6 @@
 import { format } from '../deps.ts';
 
-export type ResultGetter = () => void;
+export type ResultGetter = () => void | Promise<void>;
 
 export type TestAndPrintOptions = {
   description: string;
@@ -21,7 +21,12 @@ const testAndPrint = (options: TestAndPrintOptions) => {
   console.log('Expectation:');
   console.log(expectation + '\n');
   console.log('Result:');
-  getResult();
+  const result = getResult();
+
+  if (result instanceof Promise) {
+    return result.then(() => console.log('\n'));
+  }
+
   console.log('\n');
 };
 
