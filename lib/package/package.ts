@@ -99,6 +99,12 @@ export const handlePackage = (
   handler.finish();
 };
 
+/**
+ * Runs a package; a collection of modules.
+ * @param description - A description of the package.
+ * @param runPackage - A callback that runs modules.
+ * @returns A promise if `runPackage` is asynchronous, `void` otherwise.
+ */
 export const pack = (description: string, runPackage: PackageRunner) => {
   const wrapHandler = () => createPackageHandler(description, '');
   handlePackage(runPackage, wrapHandler);
