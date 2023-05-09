@@ -3,7 +3,11 @@ import type {
   Test,
   TestHandler
 } from '../types/test.types.ts';
-import type { Confirm, ConfirmResult } from '../types/assert.types.ts';
+import type {
+  Confirm,
+  ConfirmAsync,
+  ConfirmResult
+} from '../types/assert.types.ts';
 import print from '../utils/print.ts';
 import { PickRequired } from '../types/utils.types.ts';
 
@@ -41,16 +45,28 @@ export const createExpectationHandler: ExpectationHandlerCreator = (
 
 export const handleExpectation = (
   expectation: unknown,
-  assert: Confirm,
+  assert: Confirm | ConfirmAsync,
   createExpectationHandler: (
     data: ConfirmResult,
     prefix?: string
   ) => PickRequired<ExpectationHandler, 'finish'>
 ) => {
-  const handler = createExpectationHandler(assert(expectation));
+  const result = assert(expectation);
+
+  if (result instanceof Promise) {
+    return result.then((value) => {
+      const handler = createExpectationHandler(value);
+      handler.finish();
+    });
+  }
+
+  const handler = createExpectationHandler(result);
   handler.finish();
 };
 
-export const expect = (expectation: unknown, assert: Confirm) => {
-  handleExpectation(expectation, assert, createExpectationHandler);
+export const expect = (
+  expectation: unknown,
+  assert: Confirm | ConfirmAsync
+) => {
+  return handleExpectation(expectation, assert, createExpectationHandler);
 };
