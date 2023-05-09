@@ -18,3 +18,13 @@ export { default as toMatch } from './assertions/to-match/to-match.ts';
 export { default as toMatchObject } from './assertions/to-match-object/to-match-object.ts';
 export { default as toReject } from './assertions/to-reject/to-reject.ts';
 export { default as toThrow } from './assertions/to-throw/to-throw.ts';
+
+// types
+export type {
+  Confirm,
+  ConfirmAsync,
+  ConfirmResult,
+  Assert,
+  AssertOptional,
+  AssertVoid
+} from './types/assert.types.ts';
