@@ -25,11 +25,11 @@ export type RejectionConstructor = new (...args: any[]) => Error;
  * expect(reject, toReject(Error, 'TypeError occurred')); // FAILED
  */
 const toReject =
-  (Err?: RejectionConstructor, message?: string): ConfirmAsync =>
+  (Err: RejectionConstructor, message?: string): ConfirmAsync =>
   async (fun) => {
     const passed = await useDenoAssertionAsync(assertRejects, [
       fun as MayReject,
-      Err as RejectionConstructor,
+      Err,
       message
     ]);
 

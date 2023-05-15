@@ -23,7 +23,7 @@ const testToReject = async () => {
     description: `${toString(fun)} should not reject`,
     message: `${toString(fun)} does not reject`,
     getResult: () => {
-      return expect(fun, toReject());
+      return expect(fun, toReject(Error));
     }
   });
 
