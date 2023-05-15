@@ -8,6 +8,7 @@ const testToReject = async () => {
   console.log(format.bold('toReject') + '\n');
   const reject = () => new Promise((_, reject) => reject(new Error()));
   const fun = () => new Promise((resolve) => resolve(undefined));
+  const ErrorWithMessage = () => new Error('An unknown error occurred.');
 
   await testAndPrint({
     expectedToPass: true,
@@ -32,6 +33,19 @@ const testToReject = async () => {
     message: `${toString(fun)} does not reject with ${toString(Error)}`,
     getResult: () => {
       return expect(fun, toReject(Error));
+    }
+  });
+
+  await testAndPrint({
+    expectedToPass: false,
+    description: `${toString(reject)} should not reject with ${toString(
+      ErrorWithMessage
+    )}`,
+    message: `${toString(reject)} does not reject with ${toString(
+      ErrorWithMessage
+    )}`,
+    getResult: () => {
+      return expect(reject, toReject(Error, 'An error occurred'));
     }
   });
 };
