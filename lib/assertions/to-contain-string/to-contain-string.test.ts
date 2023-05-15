@@ -15,19 +15,20 @@ const testToContainString = () => {
   });
 
   testAndPrint({
-    expectedToPass: true,
-    description: `"Test" should contain "t"`,
-    getResult: () => {
-      expect('Test', toContainString('t'));
-    }
-  });
-
-  testAndPrint({
     expectedToPass: false,
     description: `"Test" should not contain "a"`,
     message: `"Test" does not contain "a"`,
     getResult: () => {
       expect('Test', toContainString('a'));
+    }
+  });
+
+  testAndPrint({
+    expectedToPass: false,
+    description: `"Test" should not contain "E"`,
+    message: `"Test" does not contain "E"`,
+    getResult: () => {
+      expect('Test', toContainString('E'));
     }
   });
 };
