@@ -39,6 +39,15 @@ const testToMatch = () => {
       expect('Test', toMatch('a'));
     }
   });
+
+  testAndPrint({
+    expectedToPass: false,
+    description: `"Test" should not match "E"`,
+    message: `"Test" does not match "E"`,
+    getResult: () => {
+      expect('Test', toMatch('E'));
+    }
+  });
 };
 
 export default testToMatch;
