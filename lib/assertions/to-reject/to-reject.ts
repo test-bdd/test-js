@@ -15,6 +15,12 @@ export type RejectionConstructor = new (...args: any[]) => Error;
  * @returns `Confirm`; a function that takes the function passed to `expect`
  *   and checks if it rejects. If `Err` is given, it also checks if the function rejects
  *   with the error returned by `Err`.
+ * @example
+ * const reject = () => {
+ *   return new Promise((_, reject) => reject());
+ * };
+ *
+ * expect(reject, toReject()); // PASSED
  */
 const toReject =
   (Err?: RejectionConstructor): ConfirmAsync =>

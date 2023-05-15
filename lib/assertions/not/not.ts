@@ -4,7 +4,10 @@ import type { Confirm } from '../../types/assert.types.ts';
  * Inverts the result of an assertion.
  *
  * @param confirm - A callback for assertion.
+ *   The callback can be returned by other assertion functions like `toEqual`.
  * @returns `void`
+ * @example
+ * expect(true, not(toEqual(false))); // PASSED
  */
 const not =
   (confirm: Confirm): Confirm =>

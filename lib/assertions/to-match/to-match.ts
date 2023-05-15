@@ -5,8 +5,12 @@ import toString from '../../utils/to-string.ts';
  * Asserts if a `string` matches a `RegExp` or another `string`.
  *
  * @param result - A `RegExp` or `string`.
+ *   If `result` is a `string`, it is converted to a `RegExp`.
  * @returns `Confirm`; a function that takes the `string` passed to `expect`
  *   and checks if it matches `result`.
+ * @example
+ * expect('Test', toMatch('T')); // PASSED
+ * expect('Test', toMatch('E')); // PASSED
  */
 const toMatch: Assert = (result) => (expectation) => {
   const regex =
