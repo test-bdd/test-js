@@ -8,7 +8,7 @@ const testToThrow = () => {
   console.log(format.bold('toThrow') + '\n');
   const errorMessage = 'Unknown error occurred';
 
-  const throwFun = () => {
+  const throwError = () => {
     throw new Error();
   };
 
@@ -16,40 +16,29 @@ const testToThrow = () => {
     throw new Error(errorMessage);
   };
 
-  const getError = () => new Error(errorMessage);
-
   const fun = () => {};
 
   testAndPrint({
     expectedToPass: true,
-    description: `${toString(throwFun)} should throw ${Error}`,
+    description: `${toString(throwError)} should throw ${Error}`,
     getResult: () => {
-      expect(throwFun, toThrow(Error));
+      expect(throwError, toThrow(Error));
     }
   });
 
   testAndPrint({
     expectedToPass: true,
-    description: `${toString(throwFun)} should throw ${new Error(
+    description: `${toString(throwError)} should throw ${new Error(
       errorMessage
     )}`,
     getResult: () => {
-      expect(throwWithMessage, toThrow(getError));
+      expect(throwWithMessage, toThrow(Error, errorMessage));
     }
   });
 
   testAndPrint({
     expectedToPass: false,
-    description: `${toString(fun)} should not throw`,
-    message: `${toString(fun)} does not throw`,
-    getResult: () => {
-      expect(fun, toThrow());
-    }
-  });
-
-  testAndPrint({
-    expectedToPass: false,
-    description: `${toString(fun)} should not throw ${Error}`,
+    description: `${toString(fun)} should not throw ${toString(Error)}`,
     message: `${toString(fun)} does not throw ${toString(Error)}`,
     getResult: () => {
       expect(fun, toThrow(Error));
@@ -58,10 +47,21 @@ const testToThrow = () => {
 
   testAndPrint({
     expectedToPass: false,
-    description: `${toString(fun)} should not throw ${new Error(errorMessage)}`,
-    message: `${toString(fun)} does not throw ${toString(getError)}`,
+    description: `${toString(fun)} should not throw ${toString(Error)}`,
+    message: `${toString(fun)} does not throw ${toString(Error)}`,
     getResult: () => {
-      expect(fun, toThrow(getError));
+      expect(fun, toThrow(Error));
+    }
+  });
+
+  testAndPrint({
+    expectedToPass: false,
+    description: `${toString(throwError)} should not throw ${new Error(
+      errorMessage
+    )}`,
+    message: `${toString(throwError)} does not throw ${toString(Error)}`,
+    getResult: () => {
+      expect(throwError, toThrow(Error, 'An error occurred'));
     }
   });
 };
