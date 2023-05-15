@@ -1,5 +1,6 @@
 /**
  * Asserts using a deno assertion like `assertEquals` or `assertMatch`.
+ *
  * @param assert - A deno assertion like `assertEquals`.
  * @param args - The arguments taken by `assert` as an array.
  * @returns A `boolean` that indicates the success or failure of the assertion.

@@ -9,6 +9,7 @@ export type RejectionConstructor = new (...args: any[]) => Error;
 
 /**
  * Asserts if a given function rejects.
+ *
  * @param Err - An constructor that returns an error
  *   a given function is expected to reject with.
  * @returns `Confirm`; a function that takes the function passed to `expect`

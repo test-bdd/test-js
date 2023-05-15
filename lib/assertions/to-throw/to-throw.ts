@@ -9,6 +9,7 @@ export type ErrorConstructor = new (...args: any[]) => Error;
 
 /**
  * Asserts if a given function throws.
+ *
  * @param Err - An error a given function is expected to throw.
  * @returns `Confirm`; a function that takes the function passed to `expect`
  *   and checks if it throws.

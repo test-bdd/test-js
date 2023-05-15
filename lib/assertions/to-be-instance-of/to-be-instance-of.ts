@@ -5,6 +5,7 @@ import useDenoAssertion from '../use-deno-assertion/use-deno-assertion.ts';
 
 /**
  * Asserts if a given value is an instance of another value.
+ *
  * @param result - A class or constructor.
  * @returns `Confirm`; a function that takes the value passed to `expect`
  *   and checks if it is an instance of `result`.

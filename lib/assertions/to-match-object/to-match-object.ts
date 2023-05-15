@@ -5,6 +5,7 @@ import useDenoAssertion from '../use-deno-assertion/use-deno-assertion.ts';
 
 /**
  * Asserts if an object matches a subset of the properties of another object.
+ *
  * @param result - The object to be matched against.
  * @returns `Confirm`; a function that takes the object passed to `expect`
  *   and checks if it matches `result`.

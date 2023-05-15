@@ -2,6 +2,7 @@ import type { Confirm } from '../../types/assert.types.ts';
 
 /**
  * Inverts the result of an assertion.
+ *
  * @param confirm - A callback for assertion.
  * @returns `void`
  */

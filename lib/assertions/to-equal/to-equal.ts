@@ -4,6 +4,7 @@ import toString from '../../utils/to-string.ts';
 
 /**
  * Asserts if two values are structurally equal.
+ *
  * @param result - The value to be compared to.
  * @returns `Confirm`; a function that takes the value passed to `expect`
  *   and compares it to `result`.

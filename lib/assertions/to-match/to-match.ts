@@ -3,6 +3,7 @@ import toString from '../../utils/to-string.ts';
 
 /**
  * Asserts if a `string` matches a `RegExp` or another `string`.
+ *
  * @param result - A `RegExp` or `string`.
  * @returns `Confirm`; a function that takes the `string` passed to `expect`
  *   and checks if it matches `result`.
