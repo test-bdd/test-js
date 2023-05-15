@@ -20,7 +20,8 @@ export type ErrorConstructor = new (...args: any[]) => Error;
  *   throw new Error();
  * };
  *
- * expect(throwError, toThrow()); // PASSED
+ * expect(throwError, toThrow(Error)); // PASSED
+ * expect(throwError, toThrow(Error, 'An unknown error occurred')); // FAILED
  */
 const toThrow =
   (Err: ErrorConstructor, message?: string): Confirm =>
