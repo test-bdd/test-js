@@ -7,6 +7,14 @@ export type MayReject = () => PromiseLike<unknown>;
 // deno-lint-ignore no-explicit-any
 export type RejectionConstructor = new (...args: any[]) => Error;
 
+/**
+ * Asserts if a given function rejects.
+ * @param Err - An constructor that returns an error
+ *   a given function is expected to reject with.
+ * @returns `Confirm`; a function that takes the function passed to `expect`
+ *   and checks if it rejects. If `Err` is given, it also checks if the function rejects
+ *   with the error returned by `Err`.
+ */
 const toReject =
   (Err?: RejectionConstructor): ConfirmAsync =>
   async (fun) => {

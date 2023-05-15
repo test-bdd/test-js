@@ -7,6 +7,13 @@ export type MayThrow = () => unknown;
 // deno-lint-ignore no-explicit-any
 export type ErrorConstructor = new (...args: any[]) => Error;
 
+/**
+ * Asserts if a given function throws.
+ * @param Err - An error a given function is expected to throw.
+ * @returns `Confirm`; a function that takes the function passed to `expect`
+ *   and checks if it throws.
+ *   If `Err` is provided, it also checks if the error thrown matches `Err`.
+ */
 const toThrow: AssertOptional = (Err) => (fun) => {
   const passed = useDenoAssertion(assertThrows, [
     fun as MayThrow,
