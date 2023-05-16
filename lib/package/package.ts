@@ -104,6 +104,19 @@ export const handlePackage = (
  * @param description - A description of the package.
  * @param runPackage - A callback that runs modules.
  * @returns A promise if `runPackage` is asynchronous, `void` otherwise.
+ * @example
+ * // Synchronous
+ * pack('Utils', (module) => {
+ *   // module code
+ * });
+ *
+ * @example
+ * // Asynchronous
+ * // Remember to wrap this in an async function if you are using an environment
+ * // that does not support top level await.
+ * await pack('Utils', async (module) => {
+ *   // module code
+ * });
  */
 export const pack = (description: string, runPackage: PackageRunner) => {
   const wrapHandler = () => createPackageHandler(description, '');

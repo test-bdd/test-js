@@ -101,6 +101,28 @@ export const handleModule = (
  * @param description - A description of the module.
  * @param runModule - A callback that runs suites.
  * @returns A promise if `runModule` is asynchronous, `void` otherwise.
+ * @example
+ * // Synchronous
+ * module('Math', (describe) => {
+ *   describe('isEven', (it) => {
+ *     it('should return true for multiples of 2', (expect) => {
+ *       expect(isEven(2), toEqual(true));
+ *       expect(isEven(1000), toEqual(true));
+ *     });
+ *
+ *     it('should return true for 0', (expect) => {
+ *       expect(isEven(0), toEqual(true));
+ *     });
+ *   });
+ * });
+ *
+ * @example
+ * // Asynchronous
+ * // Remember to wrap this in an async function if you are using an environment
+ * // that does not support top level await.
+ * await module('Time', async (describe) => {
+ *   // Asynchronous code
+ * });
  */
 export const module = (description: string, runModule: ModuleRunner) => {
   const wrapHandler = () => createModuleHandler(description, '');

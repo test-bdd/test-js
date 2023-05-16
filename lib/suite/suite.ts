@@ -98,6 +98,40 @@ export const handleSuite = (
  * @param description - A description of the test suite.
  * @param runSuite - A callback that runs steps.
  * @returns A promise if `runSuite` is asynchronous, `void` otherwise.
+ * @example
+ * // Synchronous
+ * const isEven = (num: number) => num % 2 === 0;
+ *
+ * describe('isEven', (it) => {
+ *   it('should return true for multiples of 2', (expect) => {
+ *     expect(isEven(2), toEqual(true));
+ *     expect(isEven(100), toEqual(true));
+ *   });
+ *
+ *   it('should return true for 0', (expect) => {
+ *     expect(isEven(0), toEqual(true));
+ *   });
+ *   // More it
+ * });
+ *
+ * @example
+ * // Asynchronous
+ * // Remember to wrap this in an async function if you are using an environment
+ * // that does not support top level await.
+ * const delay = (timeMilliseconds) => {
+ *   return new Promise((resolve) => {
+ *     setTimeout(() => resolve(), timeMilliseconds);
+ *   });
+ * };
+ *
+ * await describe('delay', async (it) => {
+ *   await it('should delay by 1s', async (expect) => {
+ *     const time = performance.now();
+ *     await delay(1000);
+ *     expect(performance.now() - time, toBeGreaterThanOrEqual(1000));
+ *   });
+ *   // More it
+ * });
  */
 export const describe = (description: string, runSuite: SuiteRunner) => {
   const wrapHandler = () => createSuiteHandler(description, '');

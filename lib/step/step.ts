@@ -99,9 +99,34 @@ export const handleStep = (
 
 /**
  * Runs a step; a collection of assertions.
+ *
  * @param description - Description of the step.
  * @param test - The callback that runs assertions.
  * @returns A promise if `test` is asynchronous, `void` otherwise.
+ * @example
+ * // Synchronous
+ * const isEven = (num: number) => num % 2 === 0;
+ *
+ * it('returns true if number is even', (expect) => {
+ *   expect(isEven(2), toEqual(true)); // PASSED
+ *   // More expect
+ * });
+ *
+ * @example
+ * // Asynchronous
+ * // Remember to wrap this in an async function if you are using an environment
+ * // that does not support top level await.
+ * const delay = (timeMilliseconds) => {
+ *   return new Promise((resolve) => {
+ *     setTimeout(() => resolve(), timeMilliseconds);
+ *   });
+ * };
+ *
+ * await it('should delay by 1000ms', async (expect) => {
+ *   const time = performance.now();
+ *   await delay(1000);
+ *   expect(performance.now() - time, toBeGreaterThanOrEqual(1000));
+ * });
  */
 export const it = (description: string, test: StepRunner) => {
   const wrapHandler = () => createStepHandler(description, '');
