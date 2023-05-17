@@ -22,7 +22,7 @@
     - [Examples 3](#examples-3)
       - [Example 3-1](#example-3-1)
       - [Example 3-2](#example-3-2)
-  - [`module`](#module)
+  - [`mod`](#mod)
     - [Parameters](#parameters)
     - [Return Value](#return-value)
     - [Examples 4](#examples-4)
@@ -262,7 +262,7 @@ await it("should delay by 1000ms", async expect => {
 
 ```
 
-## `module`
+## `mod`
 
 Runs a module; a collection of test suites.
 
@@ -281,7 +281,7 @@ A promise if `runModule` is asynchronous, `void` otherwise.
 
 ```ts
 // Synchronous
-module("Math", describe => {
+mod("Math", describe => {
   describe("isEven", it => {
     it("should return true for multiples of 2", expect => {
       expect(isEven(2), toEqual(true));
@@ -302,7 +302,7 @@ module("Math", describe => {
 // Asynchronous
 // Remember to wrap this in an async function if you are using an environment
 // that does not support top level await.
-await module("Time", async describe => {
+await mod("Time", async describe => {
   // Asynchronous code
 });
 
@@ -332,12 +332,12 @@ expect(true, not(toEqual(false))); // PASSED
 
 ## `pack`
 
-Runs a package; a collection of modules.
+Runs a package; a collection of mods.
 
 ### Parameters
 
 - `description`: A description of the package.
-- `runPackage`: A callback that runs modules.
+- `runPackage`: A callback that runs mods.
 
 ### Return Value
 
@@ -349,8 +349,8 @@ A promise if `runPackage` is asynchronous, `void` otherwise.
 
 ```ts
 // Synchronous
-pack("Utils", module => {
-  // module code
+pack("Utils", mod => {
+  // mod code
 });
 
 ```
@@ -361,8 +361,8 @@ pack("Utils", module => {
 // Asynchronous
 // Remember to wrap this in an async function if you are using an environment
 // that does not support top level await.
-await pack("Utils", async module => {
-  // module code
+await pack("Utils", async mod => {
+  // mod code
 });
 
 ```
