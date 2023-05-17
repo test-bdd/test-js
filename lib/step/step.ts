@@ -51,9 +51,9 @@ export const createStepHandler = (
     expectation,
     assert
   ) => {
-    handleExpectation(expectation, assert, (actual, _, time) => {
+    handleExpectation(expectation, assert, (result, _, time) => {
       const expectationHandler = createExpectationHandler(
-        actual,
+        result,
         `${prefix}${PRINT_PREFIX}`,
         time
       );

@@ -51,10 +51,10 @@ export const handleExpectation = (
   ) => PickRequired<ExpectationHandler, 'finish'>
 ) => {
   const timeMilliseconds = performance.now();
-  const actual = assert(expectation);
+  const result = assert(expectation);
 
-  if (actual instanceof Promise) {
-    return actual.then((value) => {
+  if (result instanceof Promise) {
+    return result.then((value) => {
       const handler = createExpectationHandler(
         value,
         '',
@@ -65,7 +65,7 @@ export const handleExpectation = (
   }
 
   const handler = createExpectationHandler(
-    actual,
+    result,
     '',
     performance.now() - timeMilliseconds
   );
