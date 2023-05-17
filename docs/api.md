@@ -49,52 +49,72 @@
     - [Return Value](#return-value)
     - [Examples 8](#examples-8)
       - [Example 8-1](#example-8-1)
-  - [`toBeInstanceOf`](#tobeinstanceof)
+  - [`toBeGreaterThan`](#tobegreaterthan)
     - [Parameters](#parameters)
     - [Return Value](#return-value)
     - [Examples 9](#examples-9)
       - [Example 9-1](#example-9-1)
-  - [`toContainElement`](#tocontainelement)
+  - [`toBeGreaterThanOrEqual`](#tobegreaterthanorequal)
     - [Parameters](#parameters)
     - [Return Value](#return-value)
     - [Examples 10](#examples-10)
       - [Example 10-1](#example-10-1)
-      - [Example 10-2](#example-10-2)
-  - [`toContainString`](#tocontainstring)
+  - [`toBeInstanceOf`](#tobeinstanceof)
     - [Parameters](#parameters)
     - [Return Value](#return-value)
     - [Examples 11](#examples-11)
       - [Example 11-1](#example-11-1)
-  - [`toEqual`](#toequal)
+  - [`toBeLessThan`](#tobelessthan)
     - [Parameters](#parameters)
     - [Return Value](#return-value)
     - [Examples 12](#examples-12)
       - [Example 12-1](#example-12-1)
-      - [Example 12-2](#example-12-2)
-  - [`toExist`](#toexist)
+  - [`toBeLessThanOrEqual`](#tobelessthanorequal)
+    - [Parameters](#parameters)
     - [Return Value](#return-value)
     - [Examples 13](#examples-13)
       - [Example 13-1](#example-13-1)
-  - [`toMatch`](#tomatch)
+  - [`toContainElement`](#tocontainelement)
     - [Parameters](#parameters)
     - [Return Value](#return-value)
     - [Examples 14](#examples-14)
       - [Example 14-1](#example-14-1)
-  - [`toMatchObject`](#tomatchobject)
+      - [Example 14-2](#example-14-2)
+  - [`toContainString`](#tocontainstring)
     - [Parameters](#parameters)
     - [Return Value](#return-value)
     - [Examples 15](#examples-15)
       - [Example 15-1](#example-15-1)
-  - [`toReject`](#toreject)
+  - [`toEqual`](#toequal)
     - [Parameters](#parameters)
     - [Return Value](#return-value)
     - [Examples 16](#examples-16)
       - [Example 16-1](#example-16-1)
-  - [`toThrow`](#tothrow)
-    - [Parameters](#parameters)
+      - [Example 16-2](#example-16-2)
+  - [`toExist`](#toexist)
     - [Return Value](#return-value)
     - [Examples 17](#examples-17)
       - [Example 17-1](#example-17-1)
+  - [`toMatch`](#tomatch)
+    - [Parameters](#parameters)
+    - [Return Value](#return-value)
+    - [Examples 18](#examples-18)
+      - [Example 18-1](#example-18-1)
+  - [`toMatchObject`](#tomatchobject)
+    - [Parameters](#parameters)
+    - [Return Value](#return-value)
+    - [Examples 19](#examples-19)
+      - [Example 19-1](#example-19-1)
+  - [`toReject`](#toreject)
+    - [Parameters](#parameters)
+    - [Return Value](#return-value)
+    - [Examples 20](#examples-20)
+      - [Example 20-1](#example-20-1)
+  - [`toThrow`](#tothrow)
+    - [Parameters](#parameters)
+    - [Return Value](#return-value)
+    - [Examples 21](#examples-21)
+      - [Example 21-1](#example-21-1)
 
 
 ## `describe`
@@ -290,7 +310,7 @@ await module("Time", async describe => {
 
 ## `not`
 
-Inverts the result of an assertion.
+Inverts the actual of an assertion.
 
 
 ### Parameters
@@ -380,12 +400,12 @@ For primitive values, it has the same functionality as `toEqual`.
 
 ### Parameters
 
-- `result`: The value to be compared to.
+- `actual`: The value to be compared to.
 
 ### Return Value
 
 `Confirm`; a function that takes the value passed to `expect`
-and compares it to `result`.
+and compares it to `actual`.
 
 ### Examples 8
 
@@ -403,6 +423,53 @@ expect(bool, toBe(true)); // PASSED
 
 ```
 
+## `toBeGreaterThan`
+
+Asserts if one number is greater than another.
+
+
+### Parameters
+
+- `actual`: The value to be compared to.
+
+### Return Value
+
+`Confirm`; a function that takes the value passed to `expect`
+and checks if it is greater than `actual`.
+
+### Examples 9
+
+#### Example 9-1
+
+```ts
+expect(2, toBeGreaterThan(1)); // PASSED
+
+```
+
+## `toBeGreaterThanOrEqual`
+
+Asserts if one number is greater than or equal to another.
+
+
+### Parameters
+
+- `actual`: The value to be compared to.
+
+### Return Value
+
+`Confirm`; a function that takes the value passed to `expect`
+and checks if it is greater than or equal to `actual`.
+
+### Examples 10
+
+#### Example 10-1
+
+```ts
+expect(2, toBeGreaterThanOrEqual(1)); // PASSED
+expect(1, toBeGreaterThanOrEqual(1)); // PASSED
+
+```
+
 ## `toBeInstanceOf`
 
 Asserts if a given value is an instance of another value.
@@ -410,20 +477,67 @@ Asserts if a given value is an instance of another value.
 
 ### Parameters
 
-- `result`: A class or constructor.
+- `actual`: A class or constructor.
 
 ### Return Value
 
 `Confirm`; a function that takes the value passed to `expect`
-and checks if it is an instance of `result`.
+and checks if it is an instance of `actual`.
 
-### Examples 9
+### Examples 11
 
-#### Example 9-1
+#### Example 11-1
 
 ```ts
 expect(new Date(), toBeInstanceOf(Date)); // PASSED
 expect(1000, toBeInstanceOf(Date)); // FAILED
+
+```
+
+## `toBeLessThan`
+
+Asserts if one number is less than another.
+
+
+### Parameters
+
+- `actual`: The value to be compared to.
+
+### Return Value
+
+`Confirm`; a function that takes the value passed to `expect`
+and checks if it is less than `actual`.
+
+### Examples 12
+
+#### Example 12-1
+
+```ts
+expect(1, toBeLessThan(2)); // PASSED
+
+```
+
+## `toBeLessThanOrEqual`
+
+Asserts if one number is less than or equal another.
+
+
+### Parameters
+
+- `actual`: The value to be compared to.
+
+### Return Value
+
+`Confirm`; a function that takes the value passed to `expect`
+and checks if it is less than or equal `actual`.
+
+### Examples 13
+
+#### Example 13-1
+
+```ts
+expect(1, toBeLessThanOrEqual(2)); // PASSED
+expect(1, toBeLessThanOrEqual(1)); // PASSED
 
 ```
 
@@ -434,16 +548,16 @@ Asserts if a given value is an element of an array.
 
 ### Parameters
 
-- `result`: A value that maybe an element of an array.
+- `actual`: A value that maybe an element of an array.
 
 ### Return Value
 
 `Confirm`; a function that takes the array passed to `expect`
-and checks if it contains `result`.
+and checks if it contains `actual`.
 
-### Examples 10
+### Examples 14
 
-#### Example 10-1
+#### Example 14-1
 
 ```ts
 // With a primitive
@@ -451,7 +565,7 @@ expect([1], toContainElement(1)); // PASSED
 
 ```
 
-#### Example 10-2
+#### Example 14-2
 
 ```ts
 // With an object
@@ -467,16 +581,16 @@ Asserts if a given string contains a given substring.
 
 ### Parameters
 
-- `result`: A substring that may be contained in another string.
+- `actual`: A substring that may be contained in another string.
 
 ### Return Value
 
 `Confirm`; a function that takes the string passed to `expect`
-and checks if it contains `result`.
+and checks if it contains `actual`.
 
-### Examples 11
+### Examples 15
 
-#### Example 11-1
+#### Example 15-1
 
 ```ts
 expect("Test", toContainString("T")); // PASSED
@@ -491,16 +605,16 @@ Asserts if two values are structurally equal.
 
 ### Parameters
 
-- `result`: The value to be compared to.
+- `actual`: The value to be compared to.
 
 ### Return Value
 
 `Confirm`; a function that takes the value passed to `expect`
-and compares it to `result`.
+and compares it to `actual`.
 
-### Examples 12
+### Examples 16
 
-#### Example 12-1
+#### Example 16-1
 
 ```ts
 // With a primitive
@@ -508,7 +622,7 @@ expect(true, toEqual(true)); // PASSED
 
 ```
 
-#### Example 12-2
+#### Example 16-2
 
 ```ts
 // With an object
@@ -527,9 +641,9 @@ Asserts if a given value is `null` or `undefined`.
 `Confirm`; a function that takes the value passed to `expect`
 and checks if it is `null` or `undefined`.
 
-### Examples 13
+### Examples 17
 
-#### Example 13-1
+#### Example 17-1
 
 ```ts
 expect(false, toExist()); // PASSED
@@ -544,16 +658,16 @@ Asserts if a `string` matches a `RegExp` or another `string`.
 
 ### Parameters
 
-- `result`: A `RegExp` or `string`.If `result` is a `string`, it is converted to a `RegExp`.
+- `actual`: A `RegExp` or `string`.If `actual` is a `string`, it is converted to a `RegExp`.
 
 ### Return Value
 
 `Confirm`; a function that takes the `string` passed to `expect`
-and checks if it matches `result`.
+and checks if it matches `actual`.
 
-### Examples 14
+### Examples 18
 
-#### Example 14-1
+#### Example 18-1
 
 ```ts
 expect("Test", toMatch("T")); // PASSED
@@ -568,16 +682,16 @@ Asserts if an object matches a subset of the properties of another object.
 
 ### Parameters
 
-- `result`: The object to be matched against.
+- `actual`: The object to be matched against.
 
 ### Return Value
 
 `Confirm`; a function that takes the object passed to `expect`
-and checks if it matches `result`.
+and checks if it matches `actual`.
 
-### Examples 15
+### Examples 19
 
-#### Example 15-1
+#### Example 19-1
 
 ```ts
 const user = { username: "johndoe", age: 19 };
@@ -601,9 +715,9 @@ Asserts if a given function rejects.
 and checks if it rejects. If `Err` is given, it also checks if the function rejects
 with the error returned by `Err`.
 
-### Examples 16
+### Examples 20
 
-#### Example 16-1
+#### Example 20-1
 
 ```ts
 const reject = () => {
@@ -631,9 +745,9 @@ Asserts if a given function throws.
 and checks if it throws.
 If `Err` is provided, it also checks if the error thrown matches `Err`.
 
-### Examples 17
+### Examples 21
 
-#### Example 17-1
+#### Example 21-1
 
 ```ts
 const throwError = () => {

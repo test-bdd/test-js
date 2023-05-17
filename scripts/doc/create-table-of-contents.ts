@@ -12,7 +12,7 @@ const createTableOfContents = (markdown: string) => {
     const textKey = 'text' as KeyOfHeading;
     const level = heading[depthKey] as unknown as number;
     const text = heading[textKey] as unknown as string;
-    console.log({ level, text });
+
     const slug = text
       .toLowerCase()
       .replace(/`/g, '')
