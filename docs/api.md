@@ -149,7 +149,6 @@ describe("isEven", it => {
   });
   // More it
 });
-
 ```
 
 #### Example 1-2
@@ -172,7 +171,6 @@ await describe("delay", async it => {
   });
   // More it
 });
-
 ```
 
 ## `expect`
@@ -196,7 +194,6 @@ A promise if `assert` is asynchronous, `void` otherwise.
 ```ts
 // Synchronous
 expect(true, toEqual(true)); // PASSED
-
 ```
 
 #### Example 2-2
@@ -210,7 +207,6 @@ const reject = () => {
 };
 
 await expect(reject, toReject(Error)); // PASSED
-
 ```
 
 ## `it`
@@ -239,7 +235,6 @@ it("returns true if number is even", expect => {
   expect(isEven(2), toEqual(true)); // PASSED
   // More expect
 });
-
 ```
 
 #### Example 3-2
@@ -259,7 +254,6 @@ await it("should delay by 1000ms", async expect => {
   await delay(1000);
   expect(performance.now() - time, toBeGreaterThanOrEqual(1000));
 });
-
 ```
 
 ## `mod`
@@ -293,7 +287,6 @@ mod("Math", describe => {
     });
   });
 });
-
 ```
 
 #### Example 4-2
@@ -305,7 +298,6 @@ mod("Math", describe => {
 await mod("Time", async describe => {
   // Asynchronous code
 });
-
 ```
 
 ## `not`
@@ -327,7 +319,6 @@ Inverts the actual of an assertion.
 
 ```ts
 expect(true, not(toEqual(false))); // PASSED
-
 ```
 
 ## `pack`
@@ -352,7 +343,6 @@ A promise if `runPackage` is asynchronous, `void` otherwise.
 pack("Utils", mod => {
   // mod code
 });
-
 ```
 
 #### Example 6-2
@@ -364,7 +354,6 @@ pack("Utils", mod => {
 await pack("Utils", async mod => {
   // mod code
 });
-
 ```
 
 ## `toAlmostEqual`
@@ -389,7 +378,6 @@ A function for asserting.
 
 ```ts
 expect(0.1 + 0.3, toAlmostEqual(0.3)); // PASSED
-
 ```
 
 ## `toBe`
@@ -420,7 +408,6 @@ expect(array2, toBe(array1)); // PASSED
 expect(array2, toBe(array3)); // FAILED
 expect(array2, toBe([1])); // FAILED
 expect(bool, toBe(true)); // PASSED
-
 ```
 
 ## `toBeGreaterThan`
@@ -443,7 +430,6 @@ and checks if it is greater than `actual`.
 
 ```ts
 expect(2, toBeGreaterThan(1)); // PASSED
-
 ```
 
 ## `toBeGreaterThanOrEqual`
@@ -467,7 +453,6 @@ and checks if it is greater than or equal to `actual`.
 ```ts
 expect(2, toBeGreaterThanOrEqual(1)); // PASSED
 expect(1, toBeGreaterThanOrEqual(1)); // PASSED
-
 ```
 
 ## `toBeInstanceOf`
@@ -491,7 +476,6 @@ and checks if it is an instance of `actual`.
 ```ts
 expect(new Date(), toBeInstanceOf(Date)); // PASSED
 expect(1000, toBeInstanceOf(Date)); // FAILED
-
 ```
 
 ## `toBeLessThan`
@@ -514,7 +498,6 @@ and checks if it is less than `actual`.
 
 ```ts
 expect(1, toBeLessThan(2)); // PASSED
-
 ```
 
 ## `toBeLessThanOrEqual`
@@ -538,7 +521,6 @@ and checks if it is less than or equal `actual`.
 ```ts
 expect(1, toBeLessThanOrEqual(2)); // PASSED
 expect(1, toBeLessThanOrEqual(1)); // PASSED
-
 ```
 
 ## `toContainElement`
@@ -562,7 +544,6 @@ and checks if it contains `actual`.
 ```ts
 // With a primitive
 expect([1], toContainElement(1)); // PASSED
-
 ```
 
 #### Example 14-2
@@ -571,7 +552,6 @@ expect([1], toContainElement(1)); // PASSED
 // With an object
 const obj = { name: "Test" };
 expect([obj], toContainElement(obj)); // PASSED
-
 ```
 
 ## `toContainString`
@@ -595,7 +575,6 @@ and checks if it contains `actual`.
 ```ts
 expect("Test", toContainString("T")); // PASSED
 expect("Test", toContainString("E")); // FAILED
-
 ```
 
 ## `toEqual`
@@ -619,7 +598,6 @@ and compares it to `actual`.
 ```ts
 // With a primitive
 expect(true, toEqual(true)); // PASSED
-
 ```
 
 #### Example 16-2
@@ -628,7 +606,6 @@ expect(true, toEqual(true)); // PASSED
 // With an object
 const obj = { name: "Test" };
 expect(obj, toEqual({ name: "Test" })); // PASSED
-
 ```
 
 ## `toExist`
@@ -648,7 +625,6 @@ and checks if it is `null` or `undefined`.
 ```ts
 expect(false, toExist()); // PASSED
 expect(null, toExist()); // FAILED
-
 ```
 
 ## `toMatch`
@@ -672,7 +648,6 @@ and checks if it matches `actual`.
 ```ts
 expect("Test", toMatch("T")); // PASSED
 expect("Test", toMatch("E")); // PASSED
-
 ```
 
 ## `toMatchObject`
@@ -696,7 +671,6 @@ and checks if it matches `actual`.
 ```ts
 const user = { username: "johndoe", age: 19 };
 expect(user, toMatchObject({ username: "johndoe" })); // PASSED
-
 ```
 
 ## `toReject`
@@ -726,7 +700,6 @@ const reject = () => {
 
 expect(reject, toReject()); // PASSED
 expect(reject, toReject(Error, "TypeError occurred")); // FAILED
-
 ```
 
 ## `toThrow`
@@ -756,5 +729,4 @@ const throwError = () => {
 
 expect(throwError, toThrow(Error)); // PASSED
 expect(throwError, toThrow(Error, "An unknown error occurred")); // FAILED
-
 ```

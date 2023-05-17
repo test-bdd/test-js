@@ -79,7 +79,7 @@ const createExampleMarkdown: TagToMarkdown = (examples) => {
     .map((example, index) => {
       const heading = `#### Example ${exampleNumber}-${index + 1}`;
       const description = example[0];
-      const code = formatTSCode(example.slice(1).join('\n'));
+      const code = formatTSCode(example.slice(1).join('\n')).trimEnd();
       const codeBlock = `\`\`\`ts\n${code}\n\`\`\``;
 
       return (
