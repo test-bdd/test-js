@@ -22,10 +22,10 @@ export type ToAlmostEqual = (tolerance?: number) => Assert;
  */
 const toAlmostEqual: ToAlmostEqual =
   (tolerance = DEFAULT_TOLERANCE) =>
-  (result) =>
+  (actual) =>
   (expectation) => {
     const areAlmostEqual = useDenoAssertion(assertAlmostEquals, [
-      result as number,
+      actual as number,
       expectation as number,
       tolerance
     ]);
@@ -38,7 +38,7 @@ const toAlmostEqual: ToAlmostEqual =
       return {
         passed: false,
         message: `${toString(expectation)} is not almost equal to ${toString(
-          result
+          actual
         )}`
       };
     }

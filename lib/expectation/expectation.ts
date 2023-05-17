@@ -51,16 +51,16 @@ export const handleExpectation = (
     prefix?: string
   ) => PickRequired<ExpectationHandler, 'finish'>
 ) => {
-  const result = assert(expectation);
+  const actual = assert(expectation);
 
-  if (result instanceof Promise) {
-    return result.then((value) => {
+  if (actual instanceof Promise) {
+    return actual.then((value) => {
       const handler = createExpectationHandler(value);
       handler.finish();
     });
   }
 
-  const handler = createExpectationHandler(result);
+  const handler = createExpectationHandler(actual);
   handler.finish();
 };
 

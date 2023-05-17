@@ -6,17 +6,17 @@ import useDenoAssertion from '../use-deno-assertion/use-deno-assertion.ts';
 /**
  * Asserts if a given value is an instance of another value.
  *
- * @param result - A class or constructor.
+ * @param actual - A class or constructor.
  * @returns `Confirm`; a function that takes the value passed to `expect`
- *   and checks if it is an instance of `result`.
+ *   and checks if it is an instance of `actual`.
  * @example
  * expect(new Date(), toBeInstanceOf(Date)); // PASSED
  * expect(1000, toBeInstanceOf(Date)) // FAILED
  */
-const toBeInstanceOf: Assert = (result) => (expectation) => {
+const toBeInstanceOf: Assert = (actual) => (expectation) => {
   const passed = useDenoAssertion(assertInstanceOf, [
     expectation,
-    result as ObjectConstructor
+    actual as ObjectConstructor
   ]);
 
   if (passed) {
@@ -25,7 +25,7 @@ const toBeInstanceOf: Assert = (result) => (expectation) => {
     return {
       passed: false,
       message: `${toString(expectation)} is not an instance of ${toString(
-        result
+        actual
       )}`
     };
   }

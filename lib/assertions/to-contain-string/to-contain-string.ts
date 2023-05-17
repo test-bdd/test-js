@@ -5,17 +5,17 @@ import useDenoAssertion from '../use-deno-assertion/use-deno-assertion.ts';
 /**
  * Asserts if a given string contains a given substring.
  *
- * @param result - A substring that may be contained in another string.
+ * @param actual - A substring that may be contained in another string.
  * @returns `Confirm`; a function that takes the string passed to `expect`
- *   and checks if it contains `result`.
+ *   and checks if it contains `actual`.
  * @example
  * expect('Test', toContainString('T')); // PASSED
  * expect('Test', toContainString('E')); // FAILED
  */
-const toContainString: Assert = (result) => (expectation) => {
+const toContainString: Assert = (actual) => (expectation) => {
   const passed = useDenoAssertion(assertStringIncludes, [
     expectation as string,
-    result as string
+    actual as string
   ]);
 
   if (passed) {
@@ -23,7 +23,7 @@ const toContainString: Assert = (result) => (expectation) => {
   } else {
     return {
       passed: false,
-      message: `"${expectation}" does not contain "${result}"`
+      message: `"${expectation}" does not contain "${actual}"`
     };
   }
 };

@@ -18,9 +18,9 @@ const equal = (first: unknown, second: unknown) => {
 /**
  * Asserts if two values are structurally equal.
  *
- * @param result - The value to be compared to.
+ * @param actual - The value to be compared to.
  * @returns `Confirm`; a function that takes the value passed to `expect`
- *   and compares it to `result`.
+ *   and compares it to `actual`.
  * @example
  * // With a primitive
  * expect(true, toEqual(true)); // PASSED
@@ -29,15 +29,15 @@ const equal = (first: unknown, second: unknown) => {
  * const obj = { name: 'Test' };
  * expect(obj, toEqual({ name: 'Test' })); // PASSED
  */
-const toEqual: Assert = (result: unknown) => (expectation) => {
-  if (equal(result, expectation)) {
+const toEqual: Assert = (actual: unknown) => (expectation) => {
+  if (equal(actual, expectation)) {
     return {
       passed: true
     };
   } else {
     return {
       passed: false,
-      message: `${toString(expectation)} is not equal to ${toString(result)}`
+      message: `${toString(expectation)} is not equal to ${toString(actual)}`
     };
   }
 };

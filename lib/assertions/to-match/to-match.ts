@@ -4,19 +4,19 @@ import toString from '../../utils/to-string.ts';
 /**
  * Asserts if a `string` matches a `RegExp` or another `string`.
  *
- * @param result - A `RegExp` or `string`.
- *   If `result` is a `string`, it is converted to a `RegExp`.
+ * @param actual - A `RegExp` or `string`.
+ *   If `actual` is a `string`, it is converted to a `RegExp`.
  * @returns `Confirm`; a function that takes the `string` passed to `expect`
- *   and checks if it matches `result`.
+ *   and checks if it matches `actual`.
  * @example
  * expect('Test', toMatch('T')); // PASSED
  * expect('Test', toMatch('E')); // PASSED
  */
-const toMatch: Assert = (result) => (expectation) => {
+const toMatch: Assert = (actual) => (expectation) => {
   const regex =
-    result instanceof RegExp
-      ? (result as RegExp)
-      : new RegExp(result as string);
+    actual instanceof RegExp
+      ? (actual as RegExp)
+      : new RegExp(actual as string);
 
   const passed = regex.test(expectation as string);
 
@@ -26,7 +26,7 @@ const toMatch: Assert = (result) => (expectation) => {
     return {
       passed: false,
       message: `"${expectation}" does not match ${
-        result instanceof RegExp ? toString(result) : `${toString(result)}`
+        actual instanceof RegExp ? toString(actual) : `${toString(actual)}`
       }`
     };
   }
