@@ -8,7 +8,8 @@ export type Options = Test & {
 const print = (options: Options) => {
   const { prefix, passed, time, count, message } = options;
   const coloredResult = passed ? format.green('PASSED') : format.red('FAILED');
-  let output = prefix + coloredResult;
+  const stats = ` (${count.passed}/${count.passed + count.failed}) ${time}ms`;
+  let output = prefix + coloredResult + stats;
   if (message) output += ': ' + message;
   console.log(output);
 };

@@ -1,8 +1,4 @@
-import type {
-  TestHandlerCreator,
-  Test,
-  TestHandler
-} from '../types/test.types.ts';
+import type { Test, TestHandler } from '../types/test.types.ts';
 import type {
   Confirm,
   ConfirmAsync,
@@ -14,14 +10,16 @@ import { PickRequired } from '../types/utils.types.ts';
 export type Expectation = Test;
 export type ExpectationHandler = TestHandler;
 export type Expect = (input: unknown, assert: Confirm) => void;
-export type ExpectationHandlerCreator = TestHandlerCreator<
-  ConfirmResult,
-  ExpectationHandler
->;
+export type ExpectationHandlerCreator = (
+  result: ConfirmResult,
+  prefix?: string,
+  time?: number
+) => ExpectationHandler;
 
 export const createExpectationHandler: ExpectationHandlerCreator = (
   { passed, message = '' },
-  prefix = ''
+  prefix = '',
+  time = 0
 ) => {
   const expectation: Expectation = {
     passed,
@@ -30,7 +28,7 @@ export const createExpectationHandler: ExpectationHandlerCreator = (
       passed: passed ? 1 : 0,
       failed: passed ? 0 : 1
     },
-    time: 0
+    time
   };
 
   const finish = () => {
@@ -48,19 +46,29 @@ export const handleExpectation = (
   assert: Confirm | ConfirmAsync,
   createExpectationHandler: (
     data: ConfirmResult,
-    prefix?: string
+    prefix?: string,
+    time?: number
   ) => PickRequired<ExpectationHandler, 'finish'>
 ) => {
+  const timeMilliseconds = performance.now();
   const actual = assert(expectation);
 
   if (actual instanceof Promise) {
     return actual.then((value) => {
-      const handler = createExpectationHandler(value);
+      const handler = createExpectationHandler(
+        value,
+        '',
+        performance.now() - timeMilliseconds
+      );
       handler.finish();
     });
   }
 
-  const handler = createExpectationHandler(actual);
+  const handler = createExpectationHandler(
+    actual,
+    '',
+    performance.now() - timeMilliseconds
+  );
   handler.finish();
 };
 
