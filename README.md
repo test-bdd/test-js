@@ -43,11 +43,7 @@ This is the top-most test. It is a group of `Module`s.
 
 ### API
 
-- [expect]()
-- [it]()
-- [describe]()
-- [mod]()
-- [pack]()
+Check out the [API documentation](./docs/api.md) for more.
 
 ## License
 
