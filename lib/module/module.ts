@@ -97,8 +97,8 @@ export const handleModule = (
 };
 
 /**
- * Runs a mod; a collection of test suites.
- * @param description - A description of the mod.
+ * Runs a module; a collection of test suites.
+ * @param description - A description of the module.
  * @param runModule - A callback that runs suites.
  * @returns A promise if `runModule` is asynchronous, `void` otherwise.
  * @example
