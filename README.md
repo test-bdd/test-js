@@ -115,6 +115,63 @@ describe('delay', async (it) => {
 });
 ```
 
+## Output
+
+### Syntax
+
+The following is the syntax for the output of a test at any level:
+
+```sh
+OUTCOME (TESTS_PASSED/TOTAL) TIMEms [: DESCRIPTION]
+```
+
+where
+
+- `OUTCOME` indicates whether the test passed or failed. It can either be `PASSED` or `FAILED`.
+- `TESTS_PASSED` is the number of tests that have passed.
+- `TOTAL` is the total number of tests.
+- `TIME` is the time (in milliseconds) taken to run all tests at that level.
+- `DESCRIPTION` is the description you provide for the test. It is optional.
+
+### Examples
+
+The following examples provide possible outputs for the test given in [Usage](#synchronous);
+
+#### All Passed
+
+```sh
+PASSED (2/2) 5ms: isEven
+  PASSED (2/2) 3ms: it returns true for multiples of 2
+    PASSED (1/1) 1ms
+    PASSED (1/1) 2ms
+  PASSED (1/1) 2ms: it returns true for 0
+    PASSED (1/1) 2ms
+```
+
+#### Some Passed
+
+If a test fails, all tests at higher levels of that test are also considered to have failed.
+
+```sh
+FAILED (1/2) 5ms: isEven
+  PASSED (2/2) 3ms: it returns true for multiples of 2
+    PASSED (1/1) 1ms
+    PASSED (1/1) 2ms
+  FAILED (0/1) 2ms: it returns true for 0
+    FAILED (0/1) 2ms: false is not equal to true
+```
+
+#### All Failed
+
+```sh
+FAILED (0/2) 5ms: isEven
+  FAILED (0/2) 3ms: it returns true for multiples of 2
+    FAILED (0/1) 1ms: false is not equal to true
+    FAILED (0/1) 2ms: false is not equal to true
+  FAILED (0/1) 2ms: it returns true for 0
+    FAILED (0/1) 2ms: false is not equal to true
+```
+
 ## API
 
 Check out the [API documentation](./docs/api.md) for more.
