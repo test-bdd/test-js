@@ -11,7 +11,7 @@ A testing library for JavaScript that uses functional programming. The library w
 
 ## Architecture
 
-The testing library is organized into five layers giving you an easy way to organize your tests.
+The testing library is organized into five levels giving you an easy way to organize your tests.
 
 ```
 |-- Package
