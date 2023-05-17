@@ -1,6 +1,6 @@
 # test-js
 
-A testing library for JavaScript that uses functional programming. The library works in Deno and Node.
+A testing library for JavaScript that uses functional programming. The library works in Deno, Node and the browser.
 
 ## Features
 
@@ -8,6 +8,18 @@ A testing library for JavaScript that uses functional programming. The library w
 - **Behavior-driven Development (BDD)**: It uses behavior-driven development. This means that you test your code according to features or behavior and not implementation. This makes tests easier to write and testing code easier to maintain because even if the implementation changes, your tests don't have to change.
 - **TypeScript**: It supports TypeScript out of the box.
 - **Multiple JavaScript Environment**: It works in Deno, Node and in the browser.
+
+## Comparison with Similar Tools
+
+This library shares some similarities with [Jest](https://jestjs.io) and [Vitest](https://vitest.dev). Let us take a look at how similar and different this library is from the aforementioned tools.
+
+### Similarities
+
+This library uses behavior-driven development similar to the one used in Jest and Vitest. It uses the same terminology, such as `expect`, `it`, and `describe`. It also uses patterns and test organization strategies similar to the other tools.
+
+### Differences
+
+This library uses functional programming while Jest and Vitest use object-oriented programming. This library uses scripts written by the user to run the tests, while the other tools use CLI tools. The other libraries stop at the [suite](#suite) level when it comes to organizing tests. This library on the other hand adds two more levels - [module](#module) and [package](#package).
 
 ## Architecture
 
