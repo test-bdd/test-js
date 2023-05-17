@@ -1,5 +1,5 @@
 import type { Test, TestHandler } from '../types/test.types.ts';
-import { createModuleHandler, handleModule, module } from '../module/module.ts';
+import { createModuleHandler, handleModule, mod } from '../module/module.ts';
 import type { ModuleRunner, ModuleHandler } from '../module/module.ts';
 import { ignore } from '../utils/functions.ts';
 import { PRINT_PREFIX } from '../utils/constants.ts';
@@ -9,14 +9,14 @@ import finishTest from '../utils/finish.ts';
 import { PickRequired } from '../types/utils.types.ts';
 
 export type Package = Test & {
-  modules: Array<ModuleHandler>;
+  mods: Array<ModuleHandler>;
 };
 
 export type PackageHandler = TestHandler & {
-  addModule: (description: string, moduleRunner: ModuleRunner) => void;
+  addModule: (description: string, modRunner: ModuleRunner) => void;
 };
 
-export type PackageRunner = (test: typeof module) => void | Promise<void>;
+export type PackageRunner = (test: typeof mod) => void | Promise<void>;
 
 export const createPackageHandler = (
   message: string,
@@ -30,34 +30,31 @@ export const createPackageHandler = (
       failed: 0
     },
     time: 0,
-    modules: []
+    mods: []
   };
 
   const getCount = () => {
-    pack.count = getTestCount(pack.count, pack.modules);
+    pack.count = getTestCount(pack.count, pack.mods);
     return pack.count;
   };
 
   const getTime = () => {
-    pack.time = getTestTime(pack.time, pack.modules);
+    pack.time = getTestTime(pack.time, pack.mods);
     return pack.time;
   };
 
   // TODO: Avoid race conditions in case of concurrency
-  const addModule: PackageHandler['addModule'] = (
-    description,
-    moduleRunner
-  ) => {
-    handleModule(moduleRunner, () => {
-      const moduleHandler = createModuleHandler(
+  const addModule: PackageHandler['addModule'] = (description, modRunner) => {
+    handleModule(modRunner, () => {
+      const modHandler = createModuleHandler(
         description,
         `${prefix}${PRINT_PREFIX}`
       );
 
-      pack.modules.push(moduleHandler);
+      pack.mods.push(modHandler);
 
       return {
-        addSuite: moduleHandler.addSuite,
+        addSuite: modHandler.addSuite,
         finish: ignore
       };
     });
@@ -67,7 +64,7 @@ export const createPackageHandler = (
     finishTest({
       getCount,
       getTime,
-      subHandlers: pack.modules,
+      subHandlers: pack.mods,
       message: pack.message,
       prefix
     });
@@ -82,7 +79,7 @@ export const handlePackage = (
 ) => {
   const handler = createHandler();
 
-  const wrapPackage: typeof module = (
+  const wrapPackage: typeof mod = (
     description: string,
     runModule: ModuleRunner
   ) => {
@@ -100,22 +97,22 @@ export const handlePackage = (
 };
 
 /**
- * Runs a package; a collection of modules.
+ * Runs a package; a collection of mods.
  * @param description - A description of the package.
- * @param runPackage - A callback that runs modules.
+ * @param runPackage - A callback that runs mods.
  * @returns A promise if `runPackage` is asynchronous, `void` otherwise.
  * @example
  * // Synchronous
- * pack('Utils', (module) => {
- *   // module code
+ * pack('Utils', (mod) => {
+ *   // mod code
  * });
  *
  * @example
  * // Asynchronous
  * // Remember to wrap this in an async function if you are using an environment
  * // that does not support top level await.
- * await pack('Utils', async (module) => {
- *   // module code
+ * await pack('Utils', async (mod) => {
+ *   // mod code
  * });
  */
 export const pack = (description: string, runPackage: PackageRunner) => {

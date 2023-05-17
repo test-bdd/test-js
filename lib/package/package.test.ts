@@ -15,8 +15,8 @@ const testPackage = () => {
     expectedToPass: true,
     message: descriptionPackage,
     getResult: () => {
-      pack(descriptionPackage, (module) => {
-        module(descriptionModule, (describe) => {
+      pack(descriptionPackage, (mod) => {
+        mod(descriptionModule, (describe) => {
           describe(descriptionSuite, (it) => {
             it(descriptionStep, (expect) => {
               expect(true, () => ({ passed: true }));
@@ -32,8 +32,8 @@ const testPackage = () => {
     expectedToPass: false,
     message: descriptionPackage,
     getResult: () => {
-      pack(descriptionPackage, (module) => {
-        module(descriptionModule, (describe) => {
+      pack(descriptionPackage, (mod) => {
+        mod(descriptionModule, (describe) => {
           describe(descriptionSuite, (it) => {
             it(descriptionStep, (expect) => {
               expect(true, () => ({ passed: false, message: failMessage }));

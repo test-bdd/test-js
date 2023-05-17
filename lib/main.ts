@@ -2,7 +2,7 @@
 export { expect } from './expectation/expectation.ts';
 export { it } from './step/step.ts';
 export { describe } from './suite/suite.ts';
-export { module } from './module/module.ts';
+export { mod } from './module/module.ts';
 export { pack } from './package/package.ts';
 
 // Assertions

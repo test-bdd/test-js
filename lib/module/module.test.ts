@@ -1,6 +1,6 @@
 import { format } from '../deps.ts';
 import testAndPrint from '../utils/test-and-print.ts';
-import { module } from './module.ts';
+import { mod } from './module.ts';
 
 const testModule = () => {
   const failMessage = "Boolean values didn't match";
@@ -14,7 +14,7 @@ const testModule = () => {
     expectedToPass: true,
     message: descriptionModule,
     getResult: () => {
-      module(descriptionModule, (describe) => {
+      mod(descriptionModule, (describe) => {
         describe(descriptionSuite, (it) => {
           it(descriptionStep, (expect) => {
             expect(true, () => ({ passed: true }));
@@ -29,7 +29,7 @@ const testModule = () => {
     expectedToPass: false,
     message: descriptionModule,
     getResult: () => {
-      module(descriptionModule, (describe) => {
+      mod(descriptionModule, (describe) => {
         describe(descriptionSuite, (it) => {
           it(descriptionStep, (expect) => {
             expect(true, () => ({ passed: false, message: failMessage }));

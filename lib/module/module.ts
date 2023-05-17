@@ -22,7 +22,7 @@ export const createModuleHandler = (
   message: string,
   prefix: string
 ): ModuleHandler => {
-  const module: Module = {
+  const mod: Module = {
     passed: false,
     message,
     count: {
@@ -34,13 +34,13 @@ export const createModuleHandler = (
   };
 
   const getCount = () => {
-    module.count = getTestCount(module.count, module.suites);
-    return module.count;
+    mod.count = getTestCount(mod.count, mod.suites);
+    return mod.count;
   };
 
   const getTime = () => {
-    module.time = getTestTime(module.time, module.suites);
-    return module.time;
+    mod.time = getTestTime(mod.time, mod.suites);
+    return mod.time;
   };
 
   // TODO: Avoid race conditions in case of concurrency
@@ -51,7 +51,7 @@ export const createModuleHandler = (
         `${prefix}${PRINT_PREFIX}`
       );
 
-      module.suites.push(suiteHandler);
+      mod.suites.push(suiteHandler);
 
       return {
         addStep: suiteHandler.addStep,
@@ -64,8 +64,8 @@ export const createModuleHandler = (
     finishTest({
       getCount,
       getTime,
-      subHandlers: module.suites,
-      message: module.message,
+      subHandlers: mod.suites,
+      message: mod.message,
       prefix
     });
   };
@@ -97,13 +97,13 @@ export const handleModule = (
 };
 
 /**
- * Runs a module; a collection of test suites.
- * @param description - A description of the module.
+ * Runs a mod; a collection of test suites.
+ * @param description - A description of the mod.
  * @param runModule - A callback that runs suites.
  * @returns A promise if `runModule` is asynchronous, `void` otherwise.
  * @example
  * // Synchronous
- * module('Math', (describe) => {
+ * mod('Math', (describe) => {
  *   describe('isEven', (it) => {
  *     it('should return true for multiples of 2', (expect) => {
  *       expect(isEven(2), toEqual(true));
@@ -120,11 +120,11 @@ export const handleModule = (
  * // Asynchronous
  * // Remember to wrap this in an async function if you are using an environment
  * // that does not support top level await.
- * await module('Time', async (describe) => {
+ * await mod('Time', async (describe) => {
  *   // Asynchronous code
  * });
  */
-export const module = (description: string, runModule: ModuleRunner) => {
+export const mod = (description: string, runModule: ModuleRunner) => {
   const wrapHandler = () => createModuleHandler(description, '');
   handleModule(runModule, wrapHandler);
 };
