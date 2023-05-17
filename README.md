@@ -58,7 +58,7 @@ This is the top-most test. It is a group of `Module`s. This level is handled by 
 ### Synchronous
 
 ```ts
-// Deno and browser
+// Deno
 import { describe, toEqual } from 'https://deno.land/x/test-js/mod.ts';
 
 // Node ESM
@@ -85,7 +85,7 @@ describe('isEven', (it) => {
 ### Asynchronous
 
 ```ts
-// Deno and browser
+// Deno
 import {
   describe,
   toBeGreaterThanOrEqual,
