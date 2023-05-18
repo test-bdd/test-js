@@ -1,8 +1,6 @@
 {
   "tasks": {
     "test": "deno run --allow-env --allow-read --allow-write scripts/test.ts ",
-    "doc:md": "deno run --allow-read --allow-write scripts/doc/doc.ts",
-    "doc:json": "deno doc lib/main.ts --json",
-    "jsdoc-to-md": "jsdoc2md --files ./lib/main.ts ./README.md"
+    "doc": "deno run --allow-read --allow-write scripts/doc/doc.ts"
   }
 }
