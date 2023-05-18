@@ -1,4 +1,4 @@
-# test-js
+# testjs
 
 A testing library for JavaScript that uses functional programming. The library works in Deno, Node and the browser.
 
@@ -59,13 +59,13 @@ This is the top-most test. It is a group of `Module`s. This level is handled by 
 
 ```ts
 // Deno
-import { describe, toEqual } from 'https://deno.land/x/test-js/mod.ts';
+import { describe, toEqual } from 'https://deno.land/x/testjs/mod.ts';
 
 // Node ESM
-// import { describe, toEqual } from '@test-bdd/test-js';
+// import { describe, toEqual } from '@test-bdd/testjs';
 
 // Node CommonJS
-// const { describe, toEqual } = require('@test-bdd/test-js');
+// const { describe, toEqual } = require('@test-bdd/testjs');
 
 // Test subject
 const isEven = (num: number) => num % 2 === 0;
@@ -90,21 +90,21 @@ import {
   describe,
   toBeGreaterThanOrEqual,
   toBeLessThan
-} from 'https://deno.land/x/test-js/mod.ts';
+} from 'https://deno.land/x/testjs/mod.ts';
 
 // Node ESM
 // import {
 //   describe,
 //   toBeGreaterThanOrEqual,
 //   toBeLessThan
-// } from '@test-bdd/test-js';
+// } from '@test-bdd/testjs';
 
 // Node CommonJS
 // const {
 //   describe,
 //   toBeGreaterThanOrEqual,
 //   toBeLessThan
-// } = require('@test-bdd/test-js');
+// } = require('@test-bdd/testjs');
 
 // Test subject
 const delay = (timeMilliseconds: number) => {
