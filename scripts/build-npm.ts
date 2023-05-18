@@ -11,7 +11,7 @@ await build({
   },
   package: {
     // package.json properties
-    name: '@test-bdd/test-js',
+    name: '@test-bdd/testjs',
     version: Deno.args[0],
     description:
       'A testing library for JavaScript that uses behavior-driven development and functional programming.',
