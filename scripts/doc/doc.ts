@@ -13,6 +13,7 @@ type Fragment = [title: string, content: string];
 type JSDocComment = [title: string, content: string];
 
 const { readTextFile, writeTextFile } = Deno;
+const root = new URL('../../lib', import.meta.url).pathname;
 const outputFile = new URL('../../docs', import.meta.url).pathname + '/api.md';
 const isNotTestFile: FileMatches = (path) => !isTestFile(path);
 const jsdocRegex =
@@ -153,6 +154,9 @@ const convertJSDocToMarkdown = async (
   await writeMarkdownFile(outputFile, injectTableOfContents(markdown));
 };
 
-const tempRoot = new URL('../../lib', import.meta.url).pathname;
-const paths = await getPaths(tempRoot, [], isNotTestFile);
-await convertJSDocToMarkdown(paths, outputFile);
+const run = async () => {
+  const paths = await getPaths(root, [], isNotTestFile);
+  await convertJSDocToMarkdown(paths, outputFile);
+};
+
+run();
