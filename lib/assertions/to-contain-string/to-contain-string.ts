@@ -9,8 +9,10 @@ import useDenoAssertion from '../use-deno-assertion/use-deno-assertion.ts';
  * @returns `Confirm`; a function that takes the string passed to `expect`
  *   and checks if it contains `actual`.
  * @example
+ * ```ts
  * expect('Test', toContainString('T')); // PASSED
  * expect('Test', toContainString('E')); // FAILED
+ * ```
  */
 const toContainString: Assert = (actual) => (expectation) => {
   const passed = useDenoAssertion(assertStringIncludes, [

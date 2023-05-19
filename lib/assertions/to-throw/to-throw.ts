@@ -16,12 +16,14 @@ export type ErrorConstructor = new (...args: any[]) => Error;
  *   and checks if it throws.
  *   If `Err` is provided, it also checks if the error thrown matches `Err`.
  * @example
+ * ```ts
  * const throwError = () => {
  *   throw new Error();
  * };
  *
  * expect(throwError, toThrow(Error)); // PASSED
  * expect(throwError, toThrow(Error, 'An unknown error occurred')); // FAILED
+ * ```
  */
 const toThrow =
   (Err: ErrorConstructor, message?: string): Confirm =>

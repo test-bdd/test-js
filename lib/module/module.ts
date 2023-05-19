@@ -102,6 +102,7 @@ export const handleModule = (
  * @param runModule - A callback that runs suites.
  * @returns A promise if `runModule` is asynchronous, `void` otherwise.
  * @example
+ * ```ts
  * // Synchronous
  * mod('Math', (describe) => {
  *   describe('isEven', (it) => {
@@ -115,14 +116,17 @@ export const handleModule = (
  *     });
  *   });
  * });
+ * ```
  *
  * @example
+ * ```ts
  * // Asynchronous
  * // Remember to wrap this in an async function if you are using an environment
  * // that does not support top level await.
  * await mod('Time', async (describe) => {
  *   // Asynchronous code
  * });
+ * ```
  */
 export const mod = (description: string, runModule: ModuleRunner) => {
   const wrapHandler = () => createModuleHandler(description, '');

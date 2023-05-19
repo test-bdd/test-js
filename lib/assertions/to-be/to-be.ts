@@ -8,6 +8,7 @@ import type { Assert } from '../../types/assert.types.ts';
  * @returns `Confirm`; a function that takes the value passed to `expect`
  *   and compares it to `actual`.
  * @example
+ * ```ts
  * const array1 = [1];
  * const array2 = array1;
  * const array3 = [1];
@@ -16,6 +17,7 @@ import type { Assert } from '../../types/assert.types.ts';
  * expect(array2, toBe(array3)); // FAILED
  * expect(array2, toBe([1])); // FAILED
  * expect(bool, toBe(true)); // PASSED
+ * ```
  */
 const toBe: Assert = (actual: unknown) => (expectation) => {
   if (actual === expectation) {

@@ -18,7 +18,9 @@ export type ToAlmostEqual = (tolerance?: number) => Assert;
  *    to be considered almost equal. The default tolerance is 1e-7.
  * @returns A function for asserting.
  * @example
+ * ```ts
  * expect(0.1 + 0.3, toAlmostEqual(0.3)); // PASSED
+ * ```
  */
 const toAlmostEqual: ToAlmostEqual =
   (tolerance = DEFAULT_TOLERANCE) =>

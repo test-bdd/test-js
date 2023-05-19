@@ -7,7 +7,9 @@ import type { Confirm } from '../../types/assert.types.ts';
  *   The callback can be returned by other assertion functions like `toEqual`.
  * @returns `void`
  * @example
+ * ```ts
  * expect(true, not(toEqual(false))); // PASSED
+ * ```
  */
 const not =
   (confirm: Confirm): Confirm =>

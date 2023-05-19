@@ -10,8 +10,10 @@ import useDenoAssertion from '../use-deno-assertion/use-deno-assertion.ts';
  * @returns `Confirm`; a function that takes the value passed to `expect`
  *   and checks if it is an instance of `actual`.
  * @example
+ * ```ts
  * expect(new Date(), toBeInstanceOf(Date)); // PASSED
  * expect(1000, toBeInstanceOf(Date)) // FAILED
+ * ```
  */
 const toBeInstanceOf: Assert = (actual) => (expectation) => {
   const passed = useDenoAssertion(assertInstanceOf, [

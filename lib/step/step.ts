@@ -105,6 +105,7 @@ export const handleStep = (
  * @param test - The callback that runs assertions.
  * @returns A promise if `test` is asynchronous, `void` otherwise.
  * @example
+ * ```ts
  * // Synchronous
  * const isEven = (num: number) => num % 2 === 0;
  *
@@ -112,8 +113,10 @@ export const handleStep = (
  *   expect(isEven(2), toEqual(true)); // PASSED
  *   // More expect
  * });
+ * ```
  *
  * @example
+ * ```ts
  * // Asynchronous
  * // Remember to wrap this in an async function if you are using an environment
  * // that does not support top level await.
@@ -128,6 +131,7 @@ export const handleStep = (
  *   await delay(1000);
  *   expect(performance.now() - time, toBeGreaterThanOrEqual(1000));
  * });
+ * ```
  */
 export const it = (description: string, test: StepRunner) => {
   const wrapHandler = () => createStepHandler(description, '');

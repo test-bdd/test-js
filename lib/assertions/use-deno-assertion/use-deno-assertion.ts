@@ -6,8 +6,10 @@
  * @returns A `boolean` that indicates the success or failure of the assertion.
  *   It is `true` when the assertion passes, and false otherwise.
  * @example
+ * ```ts
  * const passed = useDenoAssertion(assertEqual, [true, true]);
  * console.log(passed); // true
+ * ```
  */
 // deno-lint-ignore no-explicit-any
 const useDenoAssertion = <DenoAssert extends (...args: Array<any>) => void>(

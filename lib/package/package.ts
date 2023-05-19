@@ -102,18 +102,22 @@ export const handlePackage = (
  * @param runPackage - A callback that runs mods.
  * @returns A promise if `runPackage` is asynchronous, `void` otherwise.
  * @example
+ * ```ts
  * // Synchronous
  * pack('Utils', (mod) => {
  *   // mod code
  * });
+ * ```
  *
  * @example
+ * ```ts
  * // Asynchronous
  * // Remember to wrap this in an async function if you are using an environment
  * // that does not support top level await.
  * await pack('Utils', async (mod) => {
  *   // mod code
  * });
+ * ```
  */
 export const pack = (description: string, runPackage: PackageRunner) => {
   const wrapHandler = () => createPackageHandler(description, '');

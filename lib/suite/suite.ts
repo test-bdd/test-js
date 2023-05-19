@@ -99,6 +99,7 @@ export const handleSuite = (
  * @param runSuite - A callback that runs steps.
  * @returns A promise if `runSuite` is asynchronous, `void` otherwise.
  * @example
+ * ```ts
  * // Synchronous
  * const isEven = (num: number) => num % 2 === 0;
  *
@@ -113,8 +114,10 @@ export const handleSuite = (
  *   });
  *   // More it
  * });
+ * ```
  *
  * @example
+ * ```ts
  * // Asynchronous
  * // Remember to wrap this in an async function if you are using an environment
  * // that does not support top level await.
@@ -132,6 +135,7 @@ export const handleSuite = (
  *   });
  *   // More it
  * });
+ * ```
  */
 export const describe = (description: string, runSuite: SuiteRunner) => {
   const wrapHandler = () => createSuiteHandler(description, '');

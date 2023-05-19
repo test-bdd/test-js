@@ -22,12 +22,16 @@ const equal = (first: unknown, second: unknown) => {
  * @returns `Confirm`; a function that takes the value passed to `expect`
  *   and compares it to `actual`.
  * @example
+ * ```ts
  * // With a primitive
  * expect(true, toEqual(true)); // PASSED
+ * ```
  * @example
+ * ```ts
  * // With an object
  * const obj = { name: 'Test' };
  * expect(obj, toEqual({ name: 'Test' })); // PASSED
+ * ```
  */
 const toEqual: Assert = (actual: unknown) => (expectation) => {
   if (equal(actual, expectation)) {

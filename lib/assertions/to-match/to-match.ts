@@ -9,8 +9,10 @@ import toString from '../../utils/to-string.ts';
  * @returns `Confirm`; a function that takes the `string` passed to `expect`
  *   and checks if it matches `actual`.
  * @example
+ * ```ts
  * expect('Test', toMatch('T')); // PASSED
  * expect('Test', toMatch('E')); // PASSED
+ * ```
  */
 const toMatch: Assert = (actual) => (expectation) => {
   const regex =

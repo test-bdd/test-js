@@ -79,10 +79,13 @@ export const handleExpectation = (
  * @param assert - The function used for assertion.
  * @returns A promise if `assert` is asynchronous, `void` otherwise.
  * @example
+ * ```ts
  * // Synchronous
  * expect(true, toEqual(true)); // PASSED
+ * ```
  *
  * @example
+ * ```ts
  * // Asynchronous
  * // Remember to wrap this in an async function if you are using an environment
  * // that does not support top level await.
@@ -91,6 +94,7 @@ export const handleExpectation = (
  * };
  *
  * await expect(reject, toReject(Error)); // PASSED
+ * ```
  */
 export const expect = (
   expectation: unknown,

@@ -8,7 +8,9 @@ import toString from '../../utils/to-string.ts';
  * @returns `Confirm`; a function that takes the value passed to `expect`
  *   and checks if it is greater than `actual`.
  * @example
+ * ```ts
  * expect(2, toBeGreaterThan(1)); // PASSED
+ * ```
  */
 const toBeGreaterThan: Assert = (actual: unknown) => (expectation) => {
   if ((expectation as number) > (actual as number)) {

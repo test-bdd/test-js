@@ -17,12 +17,14 @@ export type RejectionConstructor = new (...args: any[]) => Error;
  *   and checks if it rejects. If `Err` is given, it also checks if the function rejects
  *   with the error returned by `Err`.
  * @example
+ * ```ts
  * const reject = () => {
  *   return new Promise((_, reject) => reject(new Error('Error occurred')));
  * };
  *
  * expect(reject, toReject()); // PASSED
  * expect(reject, toReject(Error, 'TypeError occurred')); // FAILED
+ * ```
  */
 const toReject =
   (Err: RejectionConstructor, message?: string): ConfirmAsync =>

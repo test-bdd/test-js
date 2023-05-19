@@ -8,12 +8,16 @@ import toString from '../../utils/to-string.ts';
  * @returns `Confirm`; a function that takes the array passed to `expect`
  *   and checks if it contains `actual`.
  * @example
+ * ```ts
  * // With a primitive
  * expect([1], toContainElement(1)); // PASSED
+ * ```
  * @example
+ * ```ts
  * // With an object
  * const obj = { name: 'Test' };
  * expect([obj], toContainElement(obj)); // PASSED
+ * ```
  */
 const toContainElement: Assert = (actual) => (expectation) => {
   const passed = (expectation as Array<unknown>).indexOf(actual) > -1;

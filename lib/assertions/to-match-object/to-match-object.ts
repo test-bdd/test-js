@@ -12,8 +12,10 @@ type Obj = Record<string | number | symbol, unknown>;
  * @returns `Confirm`; a function that takes the object passed to `expect`
  *   and checks if it matches `actual`.
  * @example
+ * ```ts
  * const user = { username: 'johndoe', age: 19 };
  * expect(user, toMatchObject({ username: 'johndoe' })); // PASSED
+ * ```
  */
 const toMatchObject: Assert = (actual) => (expectation) => {
   const passed = useDenoAssertion(assertObjectMatch, [

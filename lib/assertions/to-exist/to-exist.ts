@@ -6,8 +6,10 @@ import type { AssertVoid } from '../../types/assert.types.ts';
  * @returns `Confirm`; a function that takes the value passed to `expect`
  *   and checks if it is `null` or `undefined`.
  * @example
+ * ```ts
  * expect(false, toExist()); // PASSED
  * expect(null, toExist()); // FAILED
+ * ```
  */
 const toExist: AssertVoid = () => (expectation) => {
   const exists = expectation !== undefined && expectation !== null;
