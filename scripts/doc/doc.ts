@@ -72,6 +72,10 @@ const getExampleNumber = (() => {
   };
 })();
 
+const codeReplacer = (_: string, code: string) => {
+  return `\`\`\`ts\n${formatTSCode(code).trimEnd()}\n\`\`\``;
+};
+
 const createExampleMarkdown: TagToMarkdown = (examples) => {
   const exampleNumber = getExampleNumber();
   const heading = `### Examples ${exampleNumber}`;
@@ -80,11 +84,17 @@ const createExampleMarkdown: TagToMarkdown = (examples) => {
     .map((example, index) => {
       const heading = `#### Example ${exampleNumber}-${index + 1}`;
       const description = example[0];
-      const code = formatTSCode(example.slice(1).join('\n')).trimEnd();
-      const codeBlock = `\`\`\`ts\n${code}\n\`\`\``;
+      const codeRegex = /```ts([\s\S]+)```/;
+
+      const code = example
+        .slice(1)
+        .filter((line) => /\S+/.test(line))
+        .join('\n')
+        .replace(codeRegex, codeReplacer)
+        .trimEnd();
 
       return (
-        description ? [heading, description, codeBlock] : [heading, codeBlock]
+        description ? [heading, description, code] : [heading, code]
       ).join('\n\n');
     })
     .join('\n\n');

@@ -8,9 +8,14 @@ const result = parseJSDoc(`
  * @returns \`true\` if \`num\` is even, \`false\` otherwise.
  *   Note: 0 is considered to be even.
  * @example
+ * \`\`\`ts
  * console.log(isEven(2)); // true
+ * \`\`\`
+ * 
  * @example
+ * \`\`\`ts
  * console.log(isEven(0)); // true
+ * \`\`\`
  */
 `);
 
