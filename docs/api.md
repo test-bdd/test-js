@@ -137,13 +137,11 @@ A promise if `runSuite` is asynchronous, `void` otherwise.
 ```ts
 // Synchronous
 const isEven = (num: number) => num % 2 === 0;
-
 describe("isEven", it => {
   it("should return true for multiples of 2", expect => {
     expect(isEven(2), toEqual(true));
     expect(isEven(100), toEqual(true));
   });
-
   it("should return true for 0", expect => {
     expect(isEven(0), toEqual(true));
   });
@@ -162,7 +160,6 @@ const delay = timeMilliseconds => {
     setTimeout(() => resolve(), timeMilliseconds);
   });
 };
-
 await describe("delay", async it => {
   await it("should delay by 1s", async expect => {
     const time = performance.now();
@@ -205,7 +202,6 @@ expect(true, toEqual(true)); // PASSED
 const reject = () => {
   return new Promise((_, reject) => reject(new Error()));
 };
-
 await expect(reject, toReject(Error)); // PASSED
 ```
 
@@ -230,7 +226,6 @@ A promise if `test` is asynchronous, `void` otherwise.
 ```ts
 // Synchronous
 const isEven = (num: number) => num % 2 === 0;
-
 it("returns true if number is even", expect => {
   expect(isEven(2), toEqual(true)); // PASSED
   // More expect
@@ -248,7 +243,6 @@ const delay = timeMilliseconds => {
     setTimeout(() => resolve(), timeMilliseconds);
   });
 };
-
 await it("should delay by 1000ms", async expect => {
   const time = performance.now();
   await delay(1000);
@@ -281,7 +275,6 @@ mod("Math", describe => {
       expect(isEven(2), toEqual(true));
       expect(isEven(1000), toEqual(true));
     });
-
     it("should return true for 0", expect => {
       expect(isEven(0), toEqual(true));
     });
@@ -697,7 +690,6 @@ with the error returned by `Err`.
 const reject = () => {
   return new Promise((_, reject) => reject(new Error("Error occurred")));
 };
-
 expect(reject, toReject()); // PASSED
 expect(reject, toReject(Error, "TypeError occurred")); // FAILED
 ```
@@ -726,7 +718,6 @@ If `Err` is provided, it also checks if the error thrown matches `Err`.
 const throwError = () => {
   throw new Error();
 };
-
 expect(throwError, toThrow(Error)); // PASSED
 expect(throwError, toThrow(Error, "An unknown error occurred")); // FAILED
 ```
