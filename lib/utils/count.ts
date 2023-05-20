@@ -5,9 +5,13 @@ export const getTotalCount = <Type extends TestHandler>(
 ): Count => {
   return testHandlers.reduce(
     (total, { getCount }) => {
+      const { failed } = getCount();
+      const passedIncrement = failed ? 0 : 1;
+      const failedIncrement = 1 - passedIncrement;
+
       return {
-        passed: total.passed + getCount().passed,
-        failed: total.failed + getCount().failed
+        passed: total.passed + passedIncrement,
+        failed: total.failed + failedIncrement
       };
     },
     { passed: 0, failed: 0 }
