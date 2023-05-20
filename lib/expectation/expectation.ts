@@ -9,7 +9,10 @@ import { PickRequired } from '../types/utils.types.ts';
 
 export type Expectation = Test;
 export type ExpectationHandler = TestHandler;
-export type Expect = (input: unknown, assert: Confirm) => void;
+export type Expect = (
+  input: unknown,
+  assert: Confirm | ConfirmAsync
+) => void | Promise<void>;
 export type ExpectationHandlerCreator = (
   result: ConfirmResult,
   prefix?: string,
@@ -49,7 +52,7 @@ export const handleExpectation = (
     prefix?: string,
     time?: number
   ) => PickRequired<ExpectationHandler, 'finish'>
-) => {
+): void | Promise<void> => {
   const timeMilliseconds = performance.now();
   const result = assert(expectation);
 
@@ -69,6 +72,7 @@ export const handleExpectation = (
     '',
     performance.now() - timeMilliseconds
   );
+
   handler.finish();
 };
 

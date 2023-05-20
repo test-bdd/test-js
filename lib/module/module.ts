@@ -13,7 +13,10 @@ export type Module = Test & {
 };
 
 export type ModuleHandler = TestHandler & {
-  addSuite: (description: string, suiteRunner: SuiteRunner) => void;
+  addSuite: (
+    description: string,
+    suiteRunner: SuiteRunner
+  ) => void | Promise<void>;
 };
 
 export type ModuleRunner = (test: typeof describe) => void | Promise<void>;
@@ -45,7 +48,7 @@ export const createModuleHandler = (
 
   // TODO: Avoid race conditions in case of concurrency
   const addSuite: ModuleHandler['addSuite'] = (description, suiteRunner) => {
-    handleSuite(suiteRunner, () => {
+    return handleSuite(suiteRunner, () => {
       const suiteHandler = createSuiteHandler(
         description,
         `${prefix}${PRINT_PREFIX}`
@@ -76,14 +79,14 @@ export const createModuleHandler = (
 export const handleModule = (
   runModule: ModuleRunner,
   createHandler: () => PickRequired<ModuleHandler, 'finish' | 'addSuite'>
-) => {
+): void | Promise<void> => {
   const handler = createHandler();
 
   const wrapModule: typeof describe = (
     description: string,
     runSuite: SuiteRunner
   ) => {
-    handler.addSuite(description, runSuite);
+    return handler.addSuite(description, runSuite);
   };
 
   // @ts-ignore: I don't know what is going on
@@ -130,5 +133,5 @@ export const handleModule = (
  */
 export const mod = (description: string, runModule: ModuleRunner) => {
   const wrapHandler = () => createModuleHandler(description, '');
-  handleModule(runModule, wrapHandler);
+  return handleModule(runModule, wrapHandler);
 };

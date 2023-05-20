@@ -13,7 +13,10 @@ export type Suite = Test & {
 };
 
 export type SuiteHandler = TestHandler & {
-  addStep: (description: string, stepRunner: StepRunner) => void;
+  addStep: (
+    description: string,
+    stepRunner: StepRunner
+  ) => void | Promise<void>;
 };
 
 export type SuiteRunner = (test: typeof it) => void | Promise<void>;
@@ -45,7 +48,7 @@ export const createSuiteHandler = (
 
   // TODO: Avoid race conditions in case of concurrency
   const addStep: SuiteHandler['addStep'] = (description, stepRunner) => {
-    handleStep(stepRunner, () => {
+    return handleStep(stepRunner, () => {
       const stepHandler = createStepHandler(
         description,
         `${prefix}${PRINT_PREFIX}`
@@ -76,11 +79,11 @@ export const createSuiteHandler = (
 export const handleSuite = (
   runSuite: SuiteRunner,
   createHandler: () => PickRequired<SuiteHandler, 'finish' | 'addStep'>
-) => {
+): void | Promise<void> => {
   const handler = createHandler();
 
   const wrapStep: typeof it = (description: string, runStep: StepRunner) => {
-    handler.addStep(description, runStep);
+    return handler.addStep(description, runStep);
   };
 
   // @ts-ignore: I don't know what is going on
@@ -139,5 +142,5 @@ export const handleSuite = (
  */
 export const describe = (description: string, runSuite: SuiteRunner) => {
   const wrapHandler = () => createSuiteHandler(description, '');
-  handleSuite(runSuite, wrapHandler);
+  return handleSuite(runSuite, wrapHandler);
 };

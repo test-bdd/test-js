@@ -51,7 +51,7 @@ export const createStepHandler = (
     expectation,
     assert
   ) => {
-    handleExpectation(expectation, assert, (result, _, time) => {
+    return handleExpectation(expectation, assert, (result, _, time) => {
       const expectationHandler = createExpectationHandler(
         result,
         `${prefix}${PRINT_PREFIX}`,
@@ -86,7 +86,7 @@ export const handleStep = (
   const handler = createHandler();
 
   const wrapExpectation: Expect = (expectation, confirm) => {
-    handler.addExpectation(expectation, confirm);
+    return handler.addExpectation(expectation, confirm);
   };
 
   const output = test(wrapExpectation);
@@ -133,7 +133,10 @@ export const handleStep = (
  * });
  * ```
  */
-export const it = (description: string, test: StepRunner) => {
+export const it = (
+  description: string,
+  test: StepRunner
+): void | Promise<void> => {
   const wrapHandler = () => createStepHandler(description, '');
-  handleStep(test, wrapHandler);
+  return handleStep(test, wrapHandler);
 };
