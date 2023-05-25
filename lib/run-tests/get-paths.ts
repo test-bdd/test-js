@@ -5,10 +5,17 @@ export type PathGetter = (
 ) => Promise<Array<string>>;
 
 const { readDir } = Deno;
-export const isFile = (path: string) => /\.[a-zA-Z]+$/.test(path);
-export const isESFile: FileMatcher = (path) => /\.(ts|tsx|js|jsx)$/.test(path);
-export const isTSFile: FileMatcher = (path) => /\.(ts|tsx)$/.test(path);
-export const isJSFile: FileMatcher = (path) => /\.(js|jsx|mjs|cjs)$/.test(path);
+
+const matchFile =
+  (regex: RegExp): FileMatcher =>
+  (path) => {
+    return regex.test(path);
+  };
+
+export const isFile = matchFile(/\.[a-zA-Z]+$/);
+export const isESFile = matchFile(/[._](test|spec)\.(ts|tsx|js|jsx)$/);
+export const isTSFile = matchFile(/[._](test|spec)\.(ts|tsx)$/);
+export const isJSFile = matchFile(/[._](test|spec)\.(js|jsx|mjs|cjs)$/);
 
 export const getPaths = (matches: FileMatcher): PathGetter => {
   const get: PathGetter = async (path, paths = []) => {
