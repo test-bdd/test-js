@@ -127,6 +127,54 @@ describe('delay', async (it) => {
 });
 ```
 
+## Running Tests
+
+You can run tests by simply running the scripts containing the tests. However, the library comes with a test runner that provides a flexible way of running tests.
+
+### Running Scripts
+
+#### Deno
+
+In deno, you can run a script using `deno run main.test.ts` where `main.test.ts` is the name of the test script. You can also create a task in `deno.jsonc` file to avoid repeated typing of long text. A task for running tests may look like the following:
+
+```json
+{
+  "tasks": {
+    "test": "deno run main.test.ts"
+  }
+}
+```
+
+To run the script, use `deno task test`.
+
+Do not forget to include necessary flags. For example, if the tests need file read and write permissions, you can modify the above task as follows:
+
+```json
+{
+  "tasks": {
+    "test": "deno run --allow-read --allow-write main.test.ts"
+  }
+}
+```
+
+#### Node
+
+In Node.js, you can run scripts by using `node main.test.js` assuming `main.test.js` is the test file. You can create a script in `package.json` to avoid repetition. The script would look like the following:
+
+```json
+{
+  "scripts": {
+    "test": "node main.test.ts"
+  }
+}
+```
+
+To run the script, use `node run test`.
+
+### Using the Test Runner
+
+Refer to the documentation for the [test runner](./docs/test-runner.md).
+
 ## Output
 
 ### Syntax
