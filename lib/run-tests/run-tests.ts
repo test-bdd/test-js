@@ -16,6 +16,13 @@ export type TestRunnerOptions = {
   getTestRunner: (mod: TestModule) => TestRunner;
 };
 
+/**
+ * Creates relative paths from absolute paths.
+ *
+ * @param absolutePaths - Absolute paths for which to create relative paths.
+ * @param entry - The entry paths for both the absolute paths and relative paths.
+ * @returns An `Array` of relative paths.
+ */
 export const createRelativePaths = (
   absolutePaths: Array<string>,
   entry: Entry
@@ -25,6 +32,46 @@ export const createRelativePaths = (
   );
 };
 
+/**
+ *
+ * @param options - An object containing the following properties:
+ * - `entry`: an object specifying the entry points of the test runner
+ *   - `absolute`: the absolute entry point.
+ *   - `relative`: the relative entry point.
+ * - `matches`: a function that checks if a file path meets certain conditions.
+ * - `importModule`: a function that imports the module containing tests.
+ * - `getTestRunner`: a function that gets the function that runs tests from the imported module.
+ * @returns A function that runs the tests. The function doesn't take any parameters
+ * and returns a promise that resolves to void or undefined.
+ * @example
+ * ```ts
+ * // Deno
+ * import {
+ *   run,
+ *   type ModuleImporter,
+ *   type TestModule,
+ *   type TestRunner
+ * } from 'https://deno.land/x/testjs/mod.ts';
+ *
+ * const { createTestRunner, isTSFile } = run;
+ * const relative = './src';
+ * // Checkout run.getPaths for equivalent in Node
+ * const absolute = new URL(relative, import.meta.url).pathname;
+ * const entry = { relative, absolute };
+ * const importModule: ModuleImporter = (path) => import(path);
+ * // Assuming the the test modules export run
+ * const getTestRunner = (mod: TestModule) => mod.run as TestRunner;
+ *
+ * const runTSTests = createTestRunner({
+ *   entry,
+ *   matches: isTSFile,
+ *   importModule,
+ *   getTestRunner
+ * });
+ *
+ * runTSTests();
+ * ```
+ */
 export const createTestRunner =
   (options: TestRunnerOptions): TestRunner =>
   async () => {
@@ -40,3 +87,6 @@ export const createTestRunner =
       await run?.();
     }
   };
+
+export * from './get-paths.ts';
+export type { FileMatcher, PathGetter } from './get-paths.ts';
