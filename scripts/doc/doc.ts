@@ -18,13 +18,22 @@ const outputFile = new URL('../../docs', import.meta.url).pathname + '/api.md';
 const isNotTestFile: FileMatches = (path) => !isTestFile(path);
 const jsdocRegex =
   /\/\*\*([\s\S]*?)\*\/\s+(?:export\s+)?(?:const|let|var)\s+([^\s\:]+)/g;
+const runPattern = /`run\.[a-zA-Z]+`\./;
 
 const getJSDocComments = (file: string): Array<JSDocComment> => {
   const comments: Array<JSDocComment> = [];
   let match;
 
   while ((match = jsdocRegex.exec(file)) !== null) {
-    comments.push([match[2], match[1]]);
+    let title = match[2];
+    let content = match[1];
+
+    if (runPattern.test(content)) {
+      title = `run.${title}`;
+      content = content.replace(runPattern, '');
+    }
+
+    comments.push([title, content]);
   }
 
   return comments;

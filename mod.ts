@@ -23,6 +23,9 @@ export { default as toMatchObject } from './lib/assertions/to-match-object/to-ma
 export { default as toReject } from './lib/assertions/to-reject/to-reject.ts';
 export { default as toThrow } from './lib/assertions/to-throw/to-throw.ts';
 
+// Test runner
+export * as run from './lib/run-tests/run-tests.ts';
+
 // types
 export type {
   Confirm,
@@ -32,3 +35,12 @@ export type {
   AssertOptional,
   AssertVoid
 } from './lib/types/assert.types.ts';
+export type {
+  TestRunner,
+  PathGetter,
+  FileMatcher,
+  ModuleImporter,
+  Entry,
+  TestModule,
+  TestRunnerOptions
+} from './lib/run-tests/run-tests.ts';
