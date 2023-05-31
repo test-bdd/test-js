@@ -38,10 +38,11 @@ export const createRelativePaths = (
  * Creates a function that runs tests.
  *
  * @param options - An object containing the following properties:
- * - `entry`: an object specifying the entry points of the test runner.
- * - `isMatch`: a function that checks if a file path meets certain conditions.
- * - `importModule`: a function that imports the module containing tests.
- * - `getTestRunner`: a function that gets the function that runs tests from the imported module.
+ *
+ * 1. `entry`: an object specifying the entry points of the test runner.
+ * 1. `isMatch`: a function that checks if a file path meets certain conditions.
+ * 1. `importModule`: a function that imports the module containing tests.
+ * 1. `getTestRunner`: a function that gets the function that runs tests from the imported module.
  * @returns A function that runs the tests. The function doesn't take any parameters
  * and returns a promise that resolves to void or undefined.
  * @example
