@@ -35,6 +35,10 @@ export type {
   AssertOptional,
   AssertVoid
 } from './lib/types/assert.types.ts';
+export type { PackageRunner } from './lib/package/package.ts';
+export type { ModuleRunner } from './lib/module/module.ts';
+export type { SuiteRunner } from './lib/suite/suite.ts';
+export type { StepRunner } from './lib/step/step.ts';
 export type {
   TestRunner,
   PathGetter,
