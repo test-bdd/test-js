@@ -11,12 +11,13 @@ export type Entry = {
 
 export type TestRunnerOptions = {
   entry: Entry;
-  matches: FileMatcher;
+  isMatch: FileMatcher;
   importModule: ModuleImporter;
   getTestRunner: (mod: TestModule) => TestRunner;
 };
 
 /**
+ * `run.createRelativePaths`.
  * Creates relative paths from absolute paths.
  *
  * @param absolutePaths - Absolute paths for which to create relative paths.
@@ -33,12 +34,12 @@ export const createRelativePaths = (
 };
 
 /**
+ * `run.createTestRunner`.
+ * Creates a function that runs tests.
  *
  * @param options - An object containing the following properties:
- * - `entry`: an object specifying the entry points of the test runner
- *   - `absolute`: the absolute entry point.
- *   - `relative`: the relative entry point.
- * - `matches`: a function that checks if a file path meets certain conditions.
+ * - `entry`: an object specifying the entry points of the test runner.
+ * - `isMatch`: a function that checks if a file path meets certain conditions.
  * - `importModule`: a function that imports the module containing tests.
  * - `getTestRunner`: a function that gets the function that runs tests from the imported module.
  * @returns A function that runs the tests. The function doesn't take any parameters
@@ -60,11 +61,11 @@ export const createRelativePaths = (
  * const entry = { relative, absolute };
  * const importModule: ModuleImporter = (path) => import(path);
  * // Assuming the the test modules export run
- * const getTestRunner = (mod: TestModule) => mod.run as TestRunner;
+ * const getTestRunner = (mod: TestModule): TestRunner => mod.run;
  *
  * const runTSTests = createTestRunner({
  *   entry,
- *   matches: isTSFile,
+ *   isMatch: isTSFile,
  *   importModule,
  *   getTestRunner
  * });
@@ -76,8 +77,8 @@ export const createTestRunner =
   (options: TestRunnerOptions): TestRunner =>
   async () => {
     const [subEntry = ''] = Deno.args;
-    const { entry, matches, importModule, getTestRunner } = options;
-    const getMatchingPaths = getPaths(matches);
+    const { entry, isMatch, importModule, getTestRunner } = options;
+    const getMatchingPaths = getPaths(isMatch);
     const absolutePaths = await getMatchingPaths(entry.absolute + subEntry);
     const relativePaths = createRelativePaths(absolutePaths, entry);
 

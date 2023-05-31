@@ -6,7 +6,7 @@ const absolute = new URL(relative, import.meta.url).pathname;
 
 const runTSTests = createTestRunner({
   entry: { absolute, relative },
-  matches: isTSFile,
+  isMatch: isTSFile,
   importModule: (path) => import(path),
   getTestRunner: (mod) => mod.run as TestRunner
 });
