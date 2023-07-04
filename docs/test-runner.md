@@ -112,21 +112,19 @@ Let us start from the bottom. The suites will have test files
 with the following general structure:
 
 ```ts
-import { mod, type ModuleRunner } from 'https://deno.land/x/testjs/mod.ts';
+import { describe, type SuiteRunner } from 'https://deno.land/x/testjs/mod.ts';
 import { testSubject } from './test-subject.ts';
 
 // Runs the suites in this file
-export const runModule: ModuleRunner = (describe) => {
-  describe('testSubject', (it) => {
-    it('should do something', (expect) => {
-      // toDoSomething may be any assertion such as toBe
-      expect(testSubject(), toDoSomething());
-    });
+export const runSuite: SuiteRunner = it => {
+  it('should do something', expect => {
+    // toDoSomething may be any assertion such as toBe
+    expect(testSubject(), toDoSomething());
   });
 };
 
 export const run = () => {
-  mod('moduleName', runModule);
+  describe('suiteName', runSuite);
 };
 ```
 
@@ -134,9 +132,9 @@ For example, the test file for `email.test.ts` imports its test subjects
 from `email.ts`. The `testSubject` may be a function that checks if an email
 has the correct format. The `toDoSomething` function may be the `toMatch` assertion.
 
-Notice how `runModule` depends on `mod`. So, the module that imports `runModule`
-will have to pass `runModule` as the second parameter to `mod`
-like `run` did: `mod('moduleName', runModule)`.
+Notice how `runSuite` depends on `describe`. So, the module that imports `runSuite`
+will have to pass `runSuite` as the second parameter to `describe`
+like `run` did: `describe('suiteName', runSuite)`.
 The export `run` runs the tests in the current file directly.
 This is the function that is used by the test runner.
 You may name it anything you want.
@@ -149,28 +147,26 @@ In this case every file would use `run`.
 All the modules will have the following general structure:
 
 ```ts
-import { pack, type PackageRunner } from 'https://deno.land/x/testjs/mod.ts';
-import { runModule } from './suite.test.ts';
+import { mod, type ModuleRunner } from 'https://deno.land/x/testjs/mod.ts';
+import { runSuite } from './suite.test.ts';
 
 // Runs the suites in this file and imported files
-export const runPackage: PackageRunner = (mod) => {
-  mod('moduleName', (describe) => {
-    runModule(describe);
-    // Run more suites
-  });
+export const runModule: ModuleRunner = describe => {
+  describe('suiteName', runSuite);
+  // Run more suites
 };
 
 export const run = () => {
-  pack('packageName', runPackage);
+  mod('ModuleName', runModule);
 };
 ```
 
-Here, the same pattern is used. The export `runPackage` runs the tests
-in this file. It depends on `pack`. It can be used by a package test file.
-The export `run` runs tests in this module and provides `pack`.
+Here, the same pattern is used. The export `runModule` runs the tests
+in this file. It depends on `mod`. It can be used by a package test file.
+The export `run` runs tests in this module and provides `mod`.
 It is used by the test runner to run the tests.
 
-Notice how the module imports `runModule`. This is the export from a test suite,
+Notice how the module imports `runSuite`. This is the export from a test suite,
 like the one described before. So, the module can run suites from other files,
 and/or its own suites.
 
@@ -187,10 +183,10 @@ import { runViews } from './src/views/views.test.ts';
 import { pack } from 'https://deno.land/x/testjs/mod.ts';
 
 // Runs the modules in this file and imported files
-pack('packageName', (mod) => {
-  runControllers(mod);
-  runModels(mod);
-  runViews(mod);
+pack('packageName', mod => {
+  mod('Controllers', runControllers);
+  mod('Models', runModels);
+  mod('Views', runViews);
 });
 ```
 
@@ -222,9 +218,9 @@ const relative = './'; // Relative path of entry directory
 // Checkout run.getPaths for equivalent in Node
 const absolute = new URL(relative, import.meta.url).pathname;
 const entry = { relative, absolute };
-const importModule: ModuleImporter = (path) => import(path);
+const importModule: ModuleImporter = path => import(path);
 // Assuming the test files export run
-const getTestRunner = (mod: TestModule): TestRunner => mod.run;
+const getTestRunner = (mod: TestModule) => mod.run as TestRunner;
 
 const runTSTests = createTestRunner({
   entry,

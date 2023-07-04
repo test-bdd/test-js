@@ -8,7 +8,7 @@ const { readDir } = Deno;
 
 const matchFile =
   (regex: RegExp): FileMatcher =>
-  (path) => {
+  path => {
     return regex.test(path);
   };
 
@@ -122,12 +122,16 @@ export const getPaths = (isMatch: FileMatcher): PathGetter => {
       return paths;
     }
 
-    const dirEntries = readDir(path);
+    try {
+      const dirEntries = readDir(path);
 
-    for await (const entry of dirEntries) {
-      if (entry.isFile || entry.isDirectory) {
-        paths = await get(`${path}/${entry.name}`, paths);
+      for await (const entry of dirEntries) {
+        if (entry.isFile || entry.isDirectory) {
+          paths = await get(`${path}/${entry.name}`, paths);
+        }
       }
+    } catch (error) {
+      console.error(error);
     }
 
     return paths;
