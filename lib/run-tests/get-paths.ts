@@ -1,3 +1,4 @@
+export type PathType = 'file' | 'directory' | 'other';
 export type FileMatcher = (path: string) => boolean;
 export type PathGetter = (
   path: string,
@@ -13,18 +14,32 @@ const matchFile =
   };
 
 /**
- * `run.isFile`.
- * Checks if a given path is for a file.
+ * `run.getPathType`.
+ * Gets the type of a given path.
  *
- * @param path - The path to a file or directory.
- * @returns `true` if `path` is for a file, `false` otherwise.
+ * @param path - The path.
+ * @returns `file` if `path` is for a file, `directory` if `path` is for a
+ *   directory, `other` if the `path` is other resources, and `Error` if an
+ *   error occurred.
  * @example
  * ```ts
- * const path = '/src/main.test.ts';
- * console.log(isFile(path)); // true
+ * const file = '/src/main.test.ts';
+ * const dir = '/src';
+ *
+ * console.log(await getPathType(file)); // 'file'
+ * console.log(await getPathType(dir)); // 'directory'
  * ```
  */
-export const isFile = matchFile(/\.[a-zA-Z]+$/);
+export const getPathType = async (path: string): Promise<PathType | Error> => {
+  try {
+    const stat = await Deno.stat(path);
+    if (stat.isFile) return 'file';
+    else if (stat.isDirectory) return 'directory';
+    else return 'other';
+  } catch (error) {
+    return error;
+  }
+};
 
 /**
  * `run.isESFile`.
@@ -117,7 +132,16 @@ export const isJSFile = matchFile(/[._](test|spec)\.(js|jsx|mjs|cjs)$/);
  */
 export const getPaths = (isMatch: FileMatcher): PathGetter => {
   const get: PathGetter = async (path, paths = []) => {
-    if (isFile(path)) {
+    const pathTypeResult = await getPathType(path);
+
+    if (pathTypeResult instanceof Error) {
+      console.error(`Failed to get path type for "${path}"`);
+      return paths;
+    }
+
+    if (pathTypeResult === 'other') return paths;
+
+    if (pathTypeResult === 'file') {
       if (isMatch(path)) paths.push(path);
       return paths;
     }
